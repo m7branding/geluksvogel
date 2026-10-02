@@ -3,7 +3,7 @@
 // leftovers move permanently, and the spam pages the hack added are reported as
 // gone so search engines drop them.
 
-/** Pages and posts that were public on www.geluksvogel.bio and must keep their address. */
+/** Pages and posts that were public on the old WordPress site and must keep their address. */
 export const originalRoutes = [
   { path: '/', source: 'WordPress-pagina 556 (HOME)' },
   { path: '/onsverhaal/', source: 'WordPress-pagina 58' },

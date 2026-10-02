@@ -1,12 +1,22 @@
 // Prepare only the build output; local Decap remains available in public/admin.
 import { execFileSync } from 'node:child_process';
-import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { stringify } from 'yaml';
 import { productionCmsConfig, siteHtaccess, siteUrl } from './cms-production.mjs';
 
 export { siteUrl };
+
+/** Every public page of the build, so search engines find the site after the move. */
+export async function sitemap(root) {
+  const pages = (await readdir(root, { recursive: true }))
+    .filter((f) => f.endsWith('index.html') && !f.startsWith('admin'))
+    .map((f) => `/${f.replace(/index\.html$/, '')}`)
+    .sort();
+  const urls = pages.map((path) => `  <url><loc>${siteUrl}${path}</loc></url>`).join('\n');
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+}
 
 export async function prepareStaging(dir, commit, { siteId = '', forceHttps = false, target = 'production' } = {}) {
   if (!/^[a-f0-9]{40}$/.test(commit || '')) throw new Error('A full Git commit is required.');
@@ -28,7 +38,13 @@ export async function prepareStaging(dir, commit, { siteId = '', forceHttps = fa
 </head><body><main><h1>Beheer is nog niet beschikbaar</h1><p>Deze omgeving wordt ingericht.</p><a href="/">Terug naar de website</a></main></body></html>\n`);
   }
   const crawlable = target !== 'staging';
-  await writeFile(resolve(root, 'robots.txt'), `User-agent: *\nDisallow:${crawlable ? '' : ' /'}\n`);
+  if (crawlable) {
+    await writeFile(resolve(root, 'sitemap.xml'), await sitemap(root));
+    await writeFile(resolve(root, 'robots.txt'), `User-agent: *\nDisallow:\n\nSitemap: ${siteUrl}/sitemap.xml\n`);
+  } else {
+    await rm(resolve(root, 'sitemap.xml'), { force: true });
+    await writeFile(resolve(root, 'robots.txt'), 'User-agent: *\nDisallow: /\n');
+  }
   await writeFile(resolve(root, '.htaccess'), siteHtaccess({ target, forceHttps }));
   await writeFile(resolve(root, 'deployment.json'), JSON.stringify({
     target, siteUrl, commit, builtAt: new Date().toISOString(),

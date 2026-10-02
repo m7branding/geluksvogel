@@ -1,6 +1,6 @@
 # GeluksVogel — Astro + Stacki
 
-De website van **GeluksVogel** (`www.geluksvogel.bio`), opnieuw gebouwd als
+De website van **GeluksVogel** (`geluksvogel.bio`), opnieuw gebouwd als
 code. Het is hetzelfde soort project als [JALO](https://github.com/m7branding/jalo):
 **Astro 7.2.9, Stacki, JSON-inhoud, Astro-contentcollecties en een lokaal Decap
 CMS**. Er is geen WordPress, PHP of database meer.

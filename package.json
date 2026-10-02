@@ -11,6 +11,7 @@
     "check": "astro check",
     "build": "astro build",
     "build:staging": "npm run build && node scripts/prepare-staging.mjs",
+    "zip": "npm run build:staging && rm -f geluksvogel-live.zip && cd dist && zip -qr -X ../geluksvogel-live.zip . -x '*.DS_Store' && cd .. && echo 'geluksvogel-live.zip is klaar om te uploaden.'",
     "deploy:staging": "bash scripts/deploy-staging.sh",
     "verify:staging": "node scripts/verify-staging.mjs",
     "preview": "astro preview",

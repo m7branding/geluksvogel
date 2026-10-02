@@ -13,3 +13,4 @@ output/
 work/
 shots/
 __pycache__/
+*.zip

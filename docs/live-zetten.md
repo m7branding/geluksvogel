@@ -1,6 +1,6 @@
 # GeluksVogel live zetten
 
-De website moet komen op **https://www.geluksvogel.bio**. Dat adres staat op één
+De website komt op **https://geluksvogel.bio** (zonder www). Dat adres staat op één
 plek: `scripts/site-url.mjs`. De build, de deploycontroles en de metadata van de
 pagina's lezen het daar.
 
@@ -14,7 +14,24 @@ niets gepubliceerd. Een geslaagde run levert dan alleen het downloadbare artifac
 > `httpdocs` helemaal en wijzig alle wachtwoorden, of kies een nieuw pakket.
 > Zie [migratie-wordpress.md](migratie-wordpress.md).
 
-## Volgorde
+## Snel: handmatig uploaden met een zip
+
+Voor een eerste livegang zonder GitHub-koppeling:
+
+```bash
+npm ci
+npm run zip
+```
+
+Dat bouwt de site met alle serverbestanden en maakt `geluksvogel-live.zip`. Upload
+die zip in Vimexx (DirectAdmin → **Bestandsbeheer**) naar
+`domains/geluksvogel.bio/public_html` en pak hem daar uit. `index.html` moet
+direct in `public_html` staan, niet in een submap. Verwijder vooraf de
+standaardbestanden van Vimexx (`index.html`, `logo.png`). Zet daarna in
+DirectAdmin bij **SSL-certificaten** Let's Encrypt aan en, zodra dat werkt,
+**Forceer SSL**.
+
+## Volgorde (automatisch publiceren via GitHub)
 
 1. **Hosting kiezen.** Het deployscript accepteert alleen een Vimexx-host
    (`web<nummer>.zxcs.nl`), een gebruiker als `u12345p67890` en de documentroot
@@ -46,7 +63,7 @@ niets gepubliceerd. Een geslaagde run levert dan alleen het downloadbare artifac
    namen.
 6. **Doorsturen aanzetten:** zet `VIMEXX_FORCE_HTTPS_REDIRECT` op `true`, maar
    pas als beide namen over HTTPS werken. Dan stuurt `.htaccess` http naar https
-   en `geluksvogel.bio` naar `www.geluksvogel.bio`.
+   en `www.geluksvogel.bio` naar `geluksvogel.bio`.
 7. **Controle.** Na de DNS-verhuizing vergelijkt de workflowstap *Verify public
    website matches this build* elke pagina op het live adres met de build.
 
@@ -57,7 +74,7 @@ niets gepubliceerd. Een geslaagde run levert dan alleen het downloadbare artifac
 * `.htaccess` met 301-doorverwijzingen voor oude WordPress-adressen, **410 Gone**
   voor de spampagina's van de hack, `404.html` als foutpagina, en cacheregels
   voor afbeeldingen en lettertypen.
-* `robots.txt` (open voor zoekmachines, of dicht met `DEPLOY_TARGET=staging`).
+* `robots.txt` en `sitemap.xml` met alle pagina's (of een dichte `robots.txt` met `DEPLOY_TARGET=staging`).
 * `deployment.json` met commit en bouwtijd.
 * `admin/`: een melding *Beheer is nog niet beschikbaar*, tenzij
   `DECAPBRIDGE_SITE_ID` is ingesteld (zie hieronder). Het lokale CMS gaat nooit

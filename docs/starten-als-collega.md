@@ -147,7 +147,7 @@ GitHub; de functie om een nieuwe repository te publiceren is niet nodig.
 
 Pushen zet de broncode op GitHub en start de buildcontroles. Zodra de
 SSH-aansluiting is afgerond en `VIMEXX_DEPLOY_ENABLED=true` staat, publiceert
-een push naar `main` ook naar `www.geluksvogel.bio`. Zie
+een push naar `main` ook naar `geluksvogel.bio`. Zie
 [live-zetten.md](live-zetten.md) voor de aansluiting op de hosting.
 
 ## Iets gewijzigd dat je niet wilt bewaren?

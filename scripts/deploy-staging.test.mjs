@@ -41,7 +41,7 @@ test('deployment refuses a build containing the local CMS before making any SSH 
   for (const file of ['index.html', '.htaccess', 'admin/index.html']) await writeFile(join(root, 'dist', file), 'fixture');
   await writeFile(join(root, 'dist/admin/config.yml'), 'local_backend: true\n');
   await writeFile(join(root, 'dist/deployment.json'), JSON.stringify({
-    target: 'production', siteUrl: 'https://www.geluksvogel.bio', commit: env.GITHUB_SHA, cmsEnabled: false,
+    target: 'production', siteUrl: 'https://geluksvogel.bio', commit: env.GITHUB_SHA, cmsEnabled: false,
   }));
   const result = spawnSync('bash', [script], { cwd: root, env, encoding: 'utf8' });
   assert.notEqual(result.status, 0);
@@ -54,7 +54,7 @@ test('a valid online CMS may deploy, but wrong-repository and local-backend buil
   await mkdir(join(root, 'dist/admin'), { recursive: true });
   for (const file of ['index.html', '.htaccess', 'admin/index.html', 'admin/preview.js']) await writeFile(join(root, 'dist', file), 'fixture');
   await writeFile(join(root, 'dist/deployment.json'), JSON.stringify({
-    target: 'production', siteUrl: 'https://www.geluksvogel.bio', commit: env.GITHUB_SHA,
+    target: 'production', siteUrl: 'https://geluksvogel.bio', commit: env.GITHUB_SHA,
     cmsEnabled: true, cmsSiteId: siteId,
   }));
   const config = productionCmsConfig('collections:\n  - name: website\n', siteId);
@@ -80,7 +80,7 @@ test('the documentroot named by the server is held to the same allowlist', async
   await mkdir(join(root, 'dist/admin'), { recursive: true });
   for (const file of ['index.html', '.htaccess', 'admin/index.html', 'admin/preview.js']) await writeFile(join(root, 'dist', file), 'fixture');
   await writeFile(join(root, 'dist/deployment.json'), JSON.stringify({
-    target: 'production', siteUrl: 'https://www.geluksvogel.bio', commit: env.GITHUB_SHA,
+    target: 'production', siteUrl: 'https://geluksvogel.bio', commit: env.GITHUB_SHA,
     cmsEnabled: true, cmsSiteId: siteId,
   }));
   await writeFile(join(root, 'dist/admin/config.yml'), stringify(productionCmsConfig('collections:\n  - name: website\n', siteId)));

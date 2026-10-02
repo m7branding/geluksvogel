@@ -33,15 +33,16 @@ export function productionCmsConfig(source, siteId) {
 
 export function siteHtaccess({ target = 'production', forceHttps = false } = {}) {
   const host = new URL(siteUrl).hostname;
-  const bare = host.replace(/^www\./, '');
+  // The other spelling of the domain (with or without www) moves to the main one.
+  const other = host.startsWith('www.') ? host.slice(4) : `www.${host}`;
   // The hosting may terminate TLS before Apache. Enable these redirects only after
-  // checking the proxy configuration and that both addresses reach this site; a
-  // plain HTTPS=off check can otherwise loop.
+  // checking the proxy configuration and that both addresses have a certificate;
+  // a plain HTTPS=off check can otherwise loop.
   const redirect = forceHttps ? `<IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteCond %{REQUEST_URI} ^/\\.well-known/acme-challenge/
 RewriteRule ^ - [L]
-RewriteCond %{HTTP_HOST} ^${bare.replace(/\./g, '\\.')}$ [NC]
+RewriteCond %{HTTP_HOST} ^${other.replace(/\./g, '\\.')}$ [NC]
 RewriteRule ^ ${siteUrl}%{REQUEST_URI} [R=301,L]
 RewriteCond %{HTTPS} !=on
 RewriteCond %{HTTP:X-Forwarded-Proto} !=https
