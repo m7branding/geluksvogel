@@ -1,0 +1,37 @@
+{
+  "name": "geluksvogel",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "check": "astro check",
+    "build": "astro build",
+    "build:staging": "npm run build && node scripts/prepare-staging.mjs",
+    "deploy:staging": "bash scripts/deploy-staging.sh",
+    "verify:staging": "node scripts/verify-staging.mjs",
+    "preview": "astro preview",
+    "astro": "astro",
+    "stacki": "bash scripts/stacki.sh",
+    "stacki:check": "node scripts/stacki-check.mjs",
+    "cms:local": "npx --yes decap-server@3.10.0",
+    "cms:sync": "node scripts/cms-sync.mjs",
+    "cms:sync:watch": "node scripts/cms-sync.mjs --watch",
+    "cms:anchors": "node scripts/cms-anchors.mjs",
+    "test:cms-sync": "node --test scripts/cms-sync.test.mjs scripts/cms-sync-integration.test.mjs",
+    "test": "node --test scripts/*.test.mjs",
+    "test:site": "node scripts/check-site.mjs"
+  },
+  "dependencies": {
+    "@astrojs/check": "0.9.10",
+    "astro": "7.2.9",
+    "typescript": "6.0.3"
+  },
+  "devDependencies": {
+    "parse5": "8.0.0",
+    "yaml": "2.9.0"
+  }
+}

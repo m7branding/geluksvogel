@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "GeluksVogel – Gelukkigere biologische producten",
+    "description": "(H)eerlijke biologische eieren en hanenvlees van kippen die in een mobiele kippenkar wonen, onder de meest natuurlijke omstandigheden. En dat proef je!",
+    "nav": "home"
+  },
+  "hero": {
+    "image": "/assets/img/home/kippenkar-weide.jpg",
+    "imageAlt": "Een mobiele kippenkar van GeluksVogel in een groene wei met paardenbloemen",
+    "headline": "Onze eitjes brengen geluk!",
+    "image2": "/assets/img/home/kippen-in-de-wei.jpg",
+    "imageAlt2": "Kippen scharrelen rond de mobiele kippenkar",
+    "headline2": "GeluksVogels in hun meest natuurlijke leefomgeving",
+    "image3": "/assets/img/home/biologische-eieren.jpg",
+    "imageAlt3": "Bruine biologische eieren in het stro naast een eierdoosje",
+    "headline3": "100% biologische eieren",
+    "image4": "/assets/img/home/heerlijk-eitje.jpg",
+    "imageAlt4": "Bruine hennen in de kippenkar",
+    "headline4": "Het meest h-eerlijke eitje",
+    "image5": "/assets/img/home/met-liefde-geraapt.jpg",
+    "imageAlt5": "Een boer haalt een tray met verse eieren uit de kippenkar",
+    "headline5": "Met liefde geraapt",
+    "prevLabel": "Vorige foto",
+    "nextLabel": "Volgende foto"
+  },
+  "producten": {
+    "eyebrow": "Onze producten",
+    "image": "/assets/img/home/eieren.jpg",
+    "imageAlt": "Biologische eieren in een mandje en een eierdoosje",
+    "headline": "Eieren",
+    "href": "/producten/#eieren",
+    "image2": "/assets/img/home/vlees.jpg",
+    "imageAlt2": "Een witte haan scharrelt tussen de hennen",
+    "headline2": "Vlees",
+    "href2": "/producten/#vlees",
+    "linkLabel": "Onze producten",
+    "href3": "/producten/"
+  },
+  "missie": {
+    "eyebrow": "GeluksVogel",
+    "headline": "(H)eerlijke biologische producten",
+    "headline2": "van kippen, die onder de meest natuurlijke omstandigheden wonen, en dat proef je!",
+    "note": "Sinds 2018"
+  },
+  "leesMeer": {
+    "image": "/assets/img/home/yvonne.jpg",
+    "imageAlt": "Yvonne, oprichter van GeluksVogel, bij de kippenkar",
+    "eyebrow": "Lees meer",
+    "headline": "over ons",
+    "href": "/onsverhaal/",
+    "image2": "/assets/img/home/de-hen.jpg",
+    "imageAlt2": "Een bruine GeluksVogel hen in het gras",
+    "eyebrow2": "Lees meer",
+    "headline2": "de kip",
+    "href2": "/de-kip/",
+    "image3": "/assets/img/home/kippen-in-de-wei.jpg",
+    "imageAlt3": "Kippen rond de mobiele kippenkar",
+    "eyebrow3": "Lees meer",
+    "headline3": "veelgestelde vragen",
+    "href3": "/veelgesteldevragen/"
+  },
+  "kerncijfers": {
+    "number": "8",
+    "label": "GeluksVogel boeren",
+    "number2": "45.000",
+    "label2": "eierdoosjes retour",
+    "number3": "5",
+    "label3": "hanen in iedere kippenkar",
+    "number4": "2",
+    "label4": "keer per week feest in het inpakstation"
+  },
+  "recepten": {
+    "headline": "Recepten",
+    "eyebrow": "Recepten",
+    "linkLabel": "Alle recepten",
+    "href": "/recepten/"
+  }
+}
