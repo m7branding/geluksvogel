@@ -1,0 +1,76 @@
+---
+import homepage from "../data/de-hen.json";
+
+interface Props {
+  /** Bovenkop. De kip */
+  eyebrow?: string;
+  /** Titel. De hen */
+  headline?: string;
+  /** Afbeelding. /assets/img/home/de-hen.jpg */
+  image?: string;
+  /** Alt-tekst. Een bruine GeluksVogel hen tussen de andere hennen */
+  imageAlt?: string;
+  /** Week. Week 0 */
+  week?: string;
+  /** Tekst. geboren bij de boerderij */
+  text?: string;
+  /** Week 2. Week 17-18 */
+  week2?: string;
+  /** Tekst 2. als jonge hennen naar GeluksVogel */
+  text2?: string;
+  /** Week 3. Week 20-22 */
+  week3?: string;
+  /** Tekst 3. de eerste henneneitjes */
+  text3?: string;
+  /** Week 4. Week 24-26 */
+  week4?: string;
+  /** Tekst 4. gewone formaat eieren */
+  text4?: string;
+  /** Week 5. Week 26-80 */
+  week5?: string;
+  /** Tekst 5. een lui kippenleven */
+  text5?: string;
+  /** Week 6. Week 80-82 */
+  week6?: string;
+  /** Tekst 6. naar de slacht */
+  text6?: string;
+}
+
+const {
+  eyebrow = homepage.levensloop.eyebrow,
+  headline = homepage.levensloop.headline,
+  image = homepage.levensloop.image,
+  imageAlt = homepage.levensloop.imageAlt,
+  week = homepage.levensloop.week,
+  text = homepage.levensloop.text,
+  week2 = homepage.levensloop.week2,
+  text2 = homepage.levensloop.text2,
+  week3 = homepage.levensloop.week3,
+  text3 = homepage.levensloop.text3,
+  week4 = homepage.levensloop.week4,
+  text4 = homepage.levensloop.text4,
+  week5 = homepage.levensloop.week5,
+  text5 = homepage.levensloop.text5,
+  week6 = homepage.levensloop.week6,
+  text6 = homepage.levensloop.text6,
+} = Astro.props;
+
+---
+<section class="section">
+  <div class="wrap">
+    <div class="section-head center"><div><p data-cms="de-hen.levensloop.eyebrow" class="eyebrow">{eyebrow}</p><h1 data-cms="de-hen.levensloop.headline" class="section-title">{headline}</h1></div></div>
+    <div class="lifecycle">
+      <ol class="reveal">
+        <li><span data-cms="de-hen.levensloop.week" class="week">{week}</span><span data-cms="de-hen.levensloop.text" class="what">{text}</span></li>
+        <li><span data-cms="de-hen.levensloop.week2" class="week">{week2}</span><span data-cms="de-hen.levensloop.text2" class="what">{text2}</span></li>
+        <li><span data-cms="de-hen.levensloop.week3" class="week">{week3}</span><span data-cms="de-hen.levensloop.text3" class="what">{text3}</span></li>
+      </ol>
+      <figure class="reveal"><img data-cms="de-hen.levensloop.image" src={image} alt={imageAlt} width="1024" height="1536" loading="lazy"></figure>
+      <ol class="reveal" start="4">
+        <li><span data-cms="de-hen.levensloop.week4" class="week">{week4}</span><span data-cms="de-hen.levensloop.text4" class="what">{text4}</span></li>
+        <li><span data-cms="de-hen.levensloop.week5" class="week">{week5}</span><span data-cms="de-hen.levensloop.text5" class="what">{text5}</span></li>
+        <li><span data-cms="de-hen.levensloop.week6" class="week">{week6}</span><span data-cms="de-hen.levensloop.text6" class="what">{text6}</span></li>
+      </ol>
+    </div>
+  </div>
+</section>

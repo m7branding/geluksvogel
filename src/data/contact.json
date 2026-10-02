@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "title": "Contact met GeluksVogel – Neem gerust contact op met ons!",
+    "description": "Heb je vragen over onze producten, wil je meer weten over ons concept of ben je geïnteresseerd om een GeluksVogel boer te worden? Neem gerust contact met ons op.",
+    "nav": "contact"
+  },
+  "formulier": {
+    "image": "/assets/img/home/contact.jpg",
+    "imageAlt": "Een GeluksVogel boer met een witte haan in zijn armen voor de kippenkar",
+    "headline": "Neem contact op",
+    "lead": "Heb je vragen over onze producten, wil je meer weten over ons concept of ben je geïnteresseerd om een GeluksVogel boer te worden? Neem dan contact met ons op via onderstaand formulier.",
+    "emailLabel": "E-mail:",
+    "email": "info@geluksvogel.bio",
+    "nameLabel": "Naam",
+    "emailFieldLabel": "E-mailadres",
+    "subjectLabel": "Onderwerp",
+    "messageLabel": "Je bericht",
+    "buttonLabel": "Verzend",
+    "resultHeadline": "Dankjewel voor je bericht!",
+    "resultText": "Je bericht staat klaar. Verstuur het vanuit je eigen e-mailprogramma naar",
+    "mailLabel": "Open in je e-mailprogramma",
+    "copyLabel": "Kopieer bericht"
+  }
+}

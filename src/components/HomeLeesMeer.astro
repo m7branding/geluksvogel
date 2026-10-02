@@ -1,0 +1,64 @@
+---
+import homepage from "../data/homepage.json";
+
+interface Props {
+  /** Afbeelding. /assets/img/home/yvonne.jpg */
+  image?: string;
+  /** Alt-tekst. Yvonne, oprichter van GeluksVogel, bij de kippenkar */
+  imageAlt?: string;
+  /** Bovenkop. Lees meer */
+  eyebrow?: string;
+  /** Titel. over ons */
+  headline?: string;
+  /** Link. /onsverhaal/ */
+  href?: string;
+  /** Afbeelding 2. /assets/img/home/de-hen.jpg */
+  image2?: string;
+  /** Alt-tekst 2. Een bruine GeluksVogel hen in het gras */
+  imageAlt2?: string;
+  /** Bovenkop 2. Lees meer */
+  eyebrow2?: string;
+  /** Titel 2. de kip */
+  headline2?: string;
+  /** Link 2. /de-kip/ */
+  href2?: string;
+  /** Afbeelding 3. /assets/img/home/kippen-in-de-wei.jpg */
+  image3?: string;
+  /** Alt-tekst 3. Kippen rond de mobiele kippenkar */
+  imageAlt3?: string;
+  /** Bovenkop 3. Lees meer */
+  eyebrow3?: string;
+  /** Titel 3. veelgestelde vragen */
+  headline3?: string;
+  /** Link 3. /veelgesteldevragen/ */
+  href3?: string;
+}
+
+const {
+  image = homepage.leesMeer.image,
+  imageAlt = homepage.leesMeer.imageAlt,
+  eyebrow = homepage.leesMeer.eyebrow,
+  headline = homepage.leesMeer.headline,
+  href = homepage.leesMeer.href,
+  image2 = homepage.leesMeer.image2,
+  imageAlt2 = homepage.leesMeer.imageAlt2,
+  eyebrow2 = homepage.leesMeer.eyebrow2,
+  headline2 = homepage.leesMeer.headline2,
+  href2 = homepage.leesMeer.href2,
+  image3 = homepage.leesMeer.image3,
+  imageAlt3 = homepage.leesMeer.imageAlt3,
+  eyebrow3 = homepage.leesMeer.eyebrow3,
+  headline3 = homepage.leesMeer.headline3,
+  href3 = homepage.leesMeer.href3,
+} = Astro.props;
+
+---
+<section class="section-tight">
+  <div class="wrap">
+    <div class="read-more">
+      <a class="tile reveal" href={href}><img data-cms="homepage.leesMeer.image" src={image} alt={imageAlt} width="1067" height="1600" loading="lazy"><span class="tile-label"><small data-cms="homepage.leesMeer.eyebrow">{eyebrow}</small><span data-cms="homepage.leesMeer.headline" class="lees">{headline}</span></span></a>
+      <a class="tile reveal" href={href2}><img data-cms="homepage.leesMeer.image2" src={image2} alt={imageAlt2} width="1067" height="1600" loading="lazy"><span class="tile-label"><small data-cms="homepage.leesMeer.eyebrow2">{eyebrow2}</small><span data-cms="homepage.leesMeer.headline2" class="lees">{headline2}</span></span></a>
+      <a class="tile reveal" href={href3}><img data-cms="homepage.leesMeer.image3" src={image3} alt={imageAlt3} width="1067" height="1600" loading="lazy"><span class="tile-label"><small data-cms="homepage.leesMeer.eyebrow3">{eyebrow3}</small><span data-cms="homepage.leesMeer.headline3" class="lees">{headline3}</span></span></a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,56 @@
+---
+import homepage from "../data/onsverhaal.json";
+
+interface Props {
+  /** Bovenkop. Wat is GeluksVogel? */
+  eyebrow?: string;
+  /** Tekst. Wist jij dat deze eitjes veel geluk brengen? Onze GeluksVogels, zo noemen wij onze kippen, wonen in  */
+  paragraph?: string;
+  /** Tekst 2. Deze mobiele kippenkar wordt elke week verplaatst naar een vers stuk gras met daarin klavers en inse */
+  paragraph2?: string;
+  /** Tekst 3. Vanuit de natuur worden er ongeveer net zoveel hennen als hanen geboren. Bij GeluksVogel kiezen we e */
+  paragraph3?: string;
+  /** Subtitel. Dit doen we ook! */
+  subheading?: string;
+  /** Tekst 4. Om ervoor te zorgen dat ‘de cirkel echt rond is’ worden onze afgekeurde eieren gebruikt door een kun */
+  paragraph4?: string;
+  /** Tekst 5. Ook over de doosjes en de wikkels is nagedacht: onze eierdoosjes zijn de enige waar statiegeld op zi */
+  paragraph5?: string;
+  /** Tekst 6. In de afgelopen tijd hebben we al enorm veel klanten gelukkig mogen maken met eitjes en vleesproduct */
+  paragraph6?: string;
+  /** Slotzin. Dit is GeluksVogel in Geluks-Vogelvlucht */
+  closing?: string;
+}
+
+const {
+  eyebrow = homepage.watIs.eyebrow,
+  paragraph = homepage.watIs.paragraph,
+  paragraph2 = homepage.watIs.paragraph2,
+  paragraph3 = homepage.watIs.paragraph3,
+  subheading = homepage.watIs.subheading,
+  paragraph4 = homepage.watIs.paragraph4,
+  paragraph5 = homepage.watIs.paragraph5,
+  paragraph6 = homepage.watIs.paragraph6,
+  closing = homepage.watIs.closing,
+} = Astro.props;
+
+---
+<section class="section">
+  <div class="wrap">
+    <div class="section-head center"><h2 data-cms="onsverhaal.watIs.eyebrow" class="section-title">{eyebrow}</h2></div>
+    <div class="split top">
+      <div class="prose reveal">
+        <p data-cms="onsverhaal.watIs.paragraph" class="lead">{paragraph}</p>
+        <p data-cms="onsverhaal.watIs.paragraph2">{paragraph2}</p>
+        <p data-cms="onsverhaal.watIs.paragraph3">{paragraph3}</p>
+      </div>
+      <div class="prose reveal">
+        <h3 data-cms="onsverhaal.watIs.subheading">{subheading}</h3>
+        <p data-cms="onsverhaal.watIs.paragraph4">{paragraph4}</p>
+        <p data-cms="onsverhaal.watIs.paragraph5">{paragraph5}</p>
+        <p data-cms="onsverhaal.watIs.paragraph6">{paragraph6}</p>
+        <p class="signoff"><span data-cms="onsverhaal.watIs.closing">{closing}</span></p>
+      </div>
+    </div>
+  </div>
+</section>

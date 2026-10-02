@@ -1,0 +1,13 @@
+---
+import type { CollectionEntry } from "astro:content";
+import RecipeMore from "./RecipeMore.astro";
+import StoryMore from "./StoryMore.astro";
+
+interface Props {
+  /** Het recept of verhaal op deze pagina. */
+  entry: CollectionEntry<"recepten"> | CollectionEntry<"verhalen">;
+}
+
+const { entry } = Astro.props;
+---
+{entry.collection === "recepten" ? <RecipeMore current={entry.id} /> : <StoryMore current={entry.id} />}

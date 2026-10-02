@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "title": "Pagina niet gevonden | GeluksVogel",
+    "description": "Deze pagina bestaat niet (meer).",
+    "nav": ""
+  },
+  "melding": {
+    "eyebrow": "404",
+    "headline": "Deze pagina is gevlogen",
+    "paragraph": "De pagina die je zoekt bestaat niet (meer). Misschien vind je wat je zoekt via het menu, of begin opnieuw op de homepage.",
+    "buttonLabel": "Naar de homepage",
+    "href": "/",
+    "linkLabel": "Bekijk de recepten",
+    "href2": "/recepten/"
+  }
+}

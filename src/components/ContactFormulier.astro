@@ -1,0 +1,76 @@
+---
+import homepage from "../data/contact.json";
+
+interface Props {
+  /** Afbeelding. /assets/img/home/contact.jpg */
+  image?: string;
+  /** Alt-tekst. Een GeluksVogel boer met een witte haan in zijn armen voor de kippenkar */
+  imageAlt?: string;
+  /** Titel. Neem contact op */
+  headline?: string;
+  /** Inleiding. Heb je vragen over onze producten, wil je meer weten over ons concept of ben je geïnteresseerd om ee */
+  lead?: string;
+  /** E-mail (label). E-mail: */
+  emailLabel?: string;
+  /** E-mailadres. info@geluksvogel.bio */
+  email?: string;
+  /** Veld naam. Naam */
+  nameLabel?: string;
+  /** Veld e-mailadres. E-mailadres */
+  emailFieldLabel?: string;
+  /** Veld onderwerp. Onderwerp */
+  subjectLabel?: string;
+  /** Veld bericht. Je bericht */
+  messageLabel?: string;
+  /** Knoptekst. Verzend */
+  buttonLabel?: string;
+  /** Titel na verzenden. Dankjewel voor je bericht! */
+  resultHeadline?: string;
+  /** Tekst na verzenden. Je bericht staat klaar. Verstuur het vanuit je eigen e-mailprogramma naar */
+  resultText?: string;
+  /** Knop e-mailprogramma. Open in je e-mailprogramma */
+  mailLabel?: string;
+  /** Knop kopiëren. Kopieer bericht */
+  copyLabel?: string;
+}
+
+const {
+  image = homepage.formulier.image,
+  imageAlt = homepage.formulier.imageAlt,
+  headline = homepage.formulier.headline,
+  lead = homepage.formulier.lead,
+  emailLabel = homepage.formulier.emailLabel,
+  email = homepage.formulier.email,
+  nameLabel = homepage.formulier.nameLabel,
+  emailFieldLabel = homepage.formulier.emailFieldLabel,
+  subjectLabel = homepage.formulier.subjectLabel,
+  messageLabel = homepage.formulier.messageLabel,
+  buttonLabel = homepage.formulier.buttonLabel,
+  resultHeadline = homepage.formulier.resultHeadline,
+  resultText = homepage.formulier.resultText,
+  mailLabel = homepage.formulier.mailLabel,
+  copyLabel = homepage.formulier.copyLabel,
+} = Astro.props;
+
+---
+<section class="contact">
+  <div class="contact-media"><img data-cms="contact.formulier.image" src={image} alt={imageAlt} width="1067" height="1600" fetchpriority="high"></div>
+  <div class="contact-body">
+    <h1 data-cms="contact.formulier.headline">{headline}</h1>
+    <p data-cms="contact.formulier.lead" class="lead">{lead}</p>
+    <p class="contact-mail"><span data-cms="contact.formulier.emailLabel">{emailLabel}</span> <a data-cms="contact.formulier.email" href={`mailto:${email}`}>{email}</a></p>
+    <form class="form" data-mail={email}>
+      <label><span data-cms="contact.formulier.nameLabel">{nameLabel}</span><input name="naam" data-label={nameLabel} autocomplete="name" required></label>
+      <label><span data-cms="contact.formulier.emailFieldLabel">{emailFieldLabel}</span><input type="email" name="email" data-label={emailFieldLabel} autocomplete="email" required></label>
+      <label class="full"><span data-cms="contact.formulier.subjectLabel">{subjectLabel}</span><input name="topic" data-label={subjectLabel}></label>
+      <label class="full"><span data-cms="contact.formulier.messageLabel">{messageLabel}</span><textarea name="bericht" data-label={messageLabel} required></textarea></label>
+      <div class="full"><button data-cms="contact.formulier.buttonLabel" class="btn" type="submit">{buttonLabel}</button></div>
+    </form>
+    <div class="form-result" aria-live="polite">
+      <h2 data-cms="contact.formulier.resultHeadline">{resultHeadline}</h2>
+      <p><span data-cms="contact.formulier.resultText">{resultText}</span> <strong data-cms="contact.formulier.email">{email}</strong></p>
+      <pre></pre>
+      <div class="actions"><a data-cms="contact.formulier.mailLabel" class="btn mail" href="#">{mailLabel}</a><button data-cms="contact.formulier.copyLabel" type="button" class="btn btn-outline copy">{copyLabel}</button></div>
+    </div>
+  </div>
+</section>

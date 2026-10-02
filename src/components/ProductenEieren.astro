@@ -1,0 +1,64 @@
+---
+import homepage from "../data/producten.json";
+
+interface Props {
+  /** Titel. GeluksVogel eieren */
+  headline?: string;
+  /** Afbeelding. /assets/img/producten/eierdoosje.jpg */
+  image?: string;
+  /** Alt-tekst. Een GeluksVogel eierdoosje met 4 biologische eieren van rondtrekkende kippen */
+  imageAlt?: string;
+  /** Subtitel. Het eierdoosje */
+  subheading?: string;
+  /** Tekst. Onze GeluksVogel eieren worden met liefde en zorg handmatig uit de legnesten gehaald, gestempeld en  */
+  paragraph?: string;
+  /** Tekst 2. Het materiaal van het eierdoosje bestaat uit 50% hergebruikt papier en 50% bermgras. Het gras wordt  */
+  paragraph2?: string;
+  /** Afbeelding 2. /assets/img/producten/wikkel.jpg */
+  image2?: string;
+  /** Alt-tekst 2. Een GeluksVogel eierdoosje met wikkel tussen de narcissen */
+  imageAlt2?: string;
+  /** Subtitel 2. De wikkel */
+  subheading2?: string;
+  /** Tekst 3. We hebben de wikkel zo ontworpen dat ook dit onderdeel van onze verpakking herbruikbaar is: Hij kan  */
+  paragraph3?: string;
+  /** Tekst 4. Stuur iemand een kaartje en verspreid het geluk! */
+  paragraph4?: string;
+}
+
+const {
+  headline = homepage.eieren.headline,
+  image = homepage.eieren.image,
+  imageAlt = homepage.eieren.imageAlt,
+  subheading = homepage.eieren.subheading,
+  paragraph = homepage.eieren.paragraph,
+  paragraph2 = homepage.eieren.paragraph2,
+  image2 = homepage.eieren.image2,
+  imageAlt2 = homepage.eieren.imageAlt2,
+  subheading2 = homepage.eieren.subheading2,
+  paragraph3 = homepage.eieren.paragraph3,
+  paragraph4 = homepage.eieren.paragraph4,
+} = Astro.props;
+
+---
+<section class="section" id="eieren">
+  <div class="wrap">
+    <h2 data-cms="producten.eieren.headline" class="products-title reveal">{headline}</h2>
+    <div class="product-row split">
+      <figure class="split-media reveal"><img data-cms="producten.eieren.image" src={image} alt={imageAlt} width="686" height="600" loading="lazy"></figure>
+      <div class="prose reveal">
+        <h3 data-cms="producten.eieren.subheading">{subheading}</h3>
+        <p data-cms="producten.eieren.paragraph">{paragraph}</p>
+        <p data-cms="producten.eieren.paragraph2">{paragraph2}</p>
+      </div>
+    </div>
+    <div class="product-row split reverse">
+      <figure class="split-media reveal"><img data-cms="producten.eieren.image2" src={image2} alt={imageAlt2} width="768" height="1024" loading="lazy"></figure>
+      <div class="prose reveal">
+        <h3 data-cms="producten.eieren.subheading2">{subheading2}</h3>
+        <p data-cms="producten.eieren.paragraph3">{paragraph3}</p>
+        <p data-cms="producten.eieren.paragraph4">{paragraph4}</p>
+      </div>
+    </div>
+  </div>
+</section>

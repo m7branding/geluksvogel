@@ -1,0 +1,28 @@
+---
+import homepage from "../data/verhalen.json";
+import { getCollection } from "astro:content";
+import { formatDate } from "../lib/format";
+
+interface Props {
+  /** Het verhaal dat nu open staat. */
+  current: string;
+  /** Titel meer. Meer verhalen */
+  moreHeadline?: string;
+}
+
+const {
+  moreHeadline = homepage.detail.moreHeadline,
+  current,
+} = Astro.props;
+const others = (await getCollection("verhalen")).filter((story) => story.id !== current).sort((a, b) => b.data.order - a.data.order);
+---
+<section class="section bg-cream">
+  <div class="wrap">
+    <div class="section-head center"><h2 data-cms="verhalen.detail.moreHeadline" class="section-title">{moreHeadline}</h2></div>
+    <ul class="cards cols-3">
+      {others.map((story) => (
+        <li class="reveal"><a class="card wide" href={`/${story.id}/`}><div class="media"><img src={story.data.image} alt={story.data.imageAlt} width="1200" height="800" loading="lazy"></div><span class="cat">{story.data.category} · {formatDate(story.data.date)}</span><h3>{story.data.title}</h3></a></li>
+      ))}
+    </ul>
+  </div>
+</section>

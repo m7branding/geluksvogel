@@ -1,0 +1,26 @@
+---
+import homepage from "../data/recepten.json";
+
+interface Props {
+  /** Bovenkop. Koken met gelukseieren */
+  eyebrow?: string;
+  /** Titel. Recepten */
+  headline?: string;
+  /** Inleiding. Heerlijke ei-recepten met liefde samengesteld om je te inspireren op verschillende manieren te genie */
+  lead?: string;
+}
+
+const {
+  eyebrow = homepage.hero.eyebrow,
+  headline = homepage.hero.headline,
+  lead = homepage.hero.lead,
+} = Astro.props;
+
+---
+<section class="page-hero">
+  <div class="wrap">
+    <p data-cms="recepten.hero.eyebrow" class="eyebrow">{eyebrow}</p>
+    <h1 data-cms="recepten.hero.headline">{headline}</h1>
+    <p data-cms="recepten.hero.lead" class="lead">{lead}</p>
+  </div>
+</section>

@@ -1,0 +1,54 @@
+---
+import homepage from "../data/de-kip.json";
+
+interface Props {
+  /** Afbeelding. /assets/img/home/de-hen.jpg */
+  image?: string;
+  /** Alt-tekst. Een bruine GeluksVogel hen in het gras */
+  imageAlt?: string;
+  /** Titel. De hen */
+  headline?: string;
+  /** Linktekst. Naar de hen */
+  linkLabel?: string;
+  /** Link. /de-hen/ */
+  href?: string;
+  /** Afbeelding 2. /assets/img/home/de-haan-wit.jpg */
+  image2?: string;
+  /** Alt-tekst 2. Een witte GeluksVogel haan pikt in het gras */
+  imageAlt2?: string;
+  /** Titel 2. De haan */
+  headline2?: string;
+  /** Linktekst 2. Naar de haan */
+  linkLabel2?: string;
+  /** Link 2. /de-haan/ */
+  href2?: string;
+}
+
+const {
+  image = homepage.keuze.image,
+  imageAlt = homepage.keuze.imageAlt,
+  headline = homepage.keuze.headline,
+  linkLabel = homepage.keuze.linkLabel,
+  href = homepage.keuze.href,
+  image2 = homepage.keuze.image2,
+  imageAlt2 = homepage.keuze.imageAlt2,
+  headline2 = homepage.keuze.headline2,
+  linkLabel2 = homepage.keuze.linkLabel2,
+  href2 = homepage.keuze.href2,
+} = Astro.props;
+
+---
+<section class="section">
+  <div class="wrap">
+    <div class="products">
+      <div class="reveal">
+        <a class="tile framed" href={href}><img data-cms="de-kip.keuze.image" src={image} alt={imageAlt} width="1024" height="1536" loading="lazy"><span class="tile-label"><strong data-cms="de-kip.keuze.headline">{headline}</strong></span></a>
+        <p class="products-foot"><a class="text-link" href={href}><span data-cms="de-kip.keuze.linkLabel">{linkLabel}</span> <svg class="arrow" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 7h50M44 1l6 6-6 6"/></svg></a></p>
+      </div>
+      <div class="reveal">
+        <a class="tile framed" href={href2}><img data-cms="de-kip.keuze.image2" src={image2} alt={imageAlt2} width="1050" height="1400" loading="lazy"><span class="tile-label"><strong data-cms="de-kip.keuze.headline2">{headline2}</strong></span></a>
+        <p class="products-foot"><a class="text-link" href={href2}><span data-cms="de-kip.keuze.linkLabel2">{linkLabel2}</span> <svg class="arrow" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 7h50M44 1l6 6-6 6"/></svg></a></p>
+      </div>
+    </div>
+  </div>
+</section>

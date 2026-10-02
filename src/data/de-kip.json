@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "title": "De kip – Lees meer over onze hennen en hanen | GeluksVogel",
+    "description": "Onze hennen worden geboren bij een boer die heel veel kennis heeft van de groei van kuiken tot jonge hen. En voor elke hen die bij GeluksVogel rondscharrelt wordt ook een haan grootgebracht.",
+    "nav": "de-kip"
+  },
+  "hero": {
+    "eyebrow": "Hennen én hanen",
+    "headline": "De kip"
+  },
+  "keuze": {
+    "image": "/assets/img/home/de-hen.jpg",
+    "imageAlt": "Een bruine GeluksVogel hen in het gras",
+    "headline": "De hen",
+    "linkLabel": "Naar de hen",
+    "href": "/de-hen/",
+    "image2": "/assets/img/home/de-haan-wit.jpg",
+    "imageAlt2": "Een witte GeluksVogel haan pikt in het gras",
+    "headline2": "De haan",
+    "linkLabel2": "Naar de haan",
+    "href2": "/de-haan/"
+  }
+}

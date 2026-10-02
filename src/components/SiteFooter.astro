@@ -1,0 +1,121 @@
+---
+import homepage from "../data/site.json";
+
+interface Props {
+  /** Afbeelding. /assets/brand/logo-white.svg */
+  image?: string;
+  /** Alt-tekst. GeluksVogel.bio */
+  imageAlt?: string;
+  /** Slogan. (H)eerlijke biologische producten */
+  tagline?: string;
+  /** Slogan 2. van kippen, die onder de meest natuurlijke omstandigheden wonen, en dat proef je! */
+  tagline2?: string;
+  /** Naam van het menu. Footermenu */
+  navLabel?: string;
+  /** Linktekst. Ons verhaal */
+  linkLabel?: string;
+  /** Link. /onsverhaal/ */
+  href?: string;
+  /** Linktekst 2. De kip */
+  linkLabel2?: string;
+  /** Link 2. /de-kip/ */
+  href2?: string;
+  /** Linktekst 3. Recepten */
+  linkLabel3?: string;
+  /** Link 3. /recepten/ */
+  href3?: string;
+  /** Linktekst 4. Producten */
+  linkLabel4?: string;
+  /** Link 4. /producten/ */
+  href4?: string;
+  /** Linktekst 5. FAQ */
+  linkLabel5?: string;
+  /** Link 5. /veelgesteldevragen/ */
+  href5?: string;
+  /** Linktekst 6. Contact */
+  linkLabel6?: string;
+  /** Link 6. /contact/ */
+  href6?: string;
+  /** Linktekst 7. Verhalen */
+  linkLabel7?: string;
+  /** Link 7. /verhalen/ */
+  href7?: string;
+  /** Bovenkop. Volg GeluksVogel op Instagram */
+  eyebrow?: string;
+  /** Instagramnaam. @geluksvogel.bio */
+  instagramLabel?: string;
+  /** Instagramlink. https://www.instagram.com/geluksvogel.bio/ */
+  instagramHref?: string;
+  /** E-mail (label). info@geluksvogel.bio */
+  emailLabel?: string;
+  /** E-maillink. mailto:info@geluksvogel.bio */
+  emailHref?: string;
+  /** Copyright. GeluksVogel.bio */
+  copyright?: string;
+  /** Linktekst naar boven. Naar boven */
+  topLabel?: string;
+}
+
+const {
+  image = homepage.footer.image,
+  imageAlt = homepage.footer.imageAlt,
+  tagline = homepage.footer.tagline,
+  tagline2 = homepage.footer.tagline2,
+  navLabel = homepage.footer.navLabel,
+  linkLabel = homepage.footer.linkLabel,
+  href = homepage.footer.href,
+  linkLabel2 = homepage.footer.linkLabel2,
+  href2 = homepage.footer.href2,
+  linkLabel3 = homepage.footer.linkLabel3,
+  href3 = homepage.footer.href3,
+  linkLabel4 = homepage.footer.linkLabel4,
+  href4 = homepage.footer.href4,
+  linkLabel5 = homepage.footer.linkLabel5,
+  href5 = homepage.footer.href5,
+  linkLabel6 = homepage.footer.linkLabel6,
+  href6 = homepage.footer.href6,
+  linkLabel7 = homepage.footer.linkLabel7,
+  href7 = homepage.footer.href7,
+  eyebrow = homepage.footer.eyebrow,
+  instagramLabel = homepage.footer.instagramLabel,
+  instagramHref = homepage.footer.instagramHref,
+  emailLabel = homepage.footer.emailLabel,
+  emailHref = homepage.footer.emailHref,
+  copyright = homepage.footer.copyright,
+  topLabel = homepage.footer.topLabel,
+} = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="main">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <img data-cms="site.footer.image" src={image} alt={imageAlt} width="376" height="458" loading="lazy">
+        <p><span data-cms="site.footer.tagline">{tagline}</span> <span data-cms="site.footer.tagline2">{tagline2}</span></p>
+      </div>
+      <div class="footer-rule" aria-hidden="true"></div>
+      <nav aria-label={navLabel}>
+        <ul class="footer-links">
+          <li><a data-cms="site.footer.linkLabel" href={href}>{linkLabel}</a></li>
+          <li><a data-cms="site.footer.linkLabel2" href={href2}>{linkLabel2}</a></li>
+          <li><a data-cms="site.footer.linkLabel3" href={href3}>{linkLabel3}</a></li>
+          <li><a data-cms="site.footer.linkLabel4" href={href4}>{linkLabel4}</a></li>
+          <li><a data-cms="site.footer.linkLabel5" href={href5}>{linkLabel5}</a></li>
+          <li><a data-cms="site.footer.linkLabel6" href={href6}>{linkLabel6}</a></li>
+          <li><a data-cms="site.footer.linkLabel7" href={href7}>{linkLabel7}</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="wrap social">
+    <p data-cms="site.footer.eyebrow" class="eyebrow">{eyebrow}</p>
+    <p><a data-cms="site.footer.instagramLabel" href={instagramHref} rel="noopener">{instagramLabel}</a></p>
+    <p><a data-cms="site.footer.emailLabel" href={emailHref}>{emailLabel}</a></p>
+  </div>
+  <div class="wrap">
+    <div class="bottom">
+      <p>© <span id="year">{year}</span> <span data-cms="site.footer.copyright">{copyright}</span></p>
+      <a href="#main" data-top><span data-cms="site.footer.topLabel">{topLabel}</span> <svg viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M6 14V2M1 6l5-5 5 5"/></svg></a>
+    </div>
+  </div>
+</footer>

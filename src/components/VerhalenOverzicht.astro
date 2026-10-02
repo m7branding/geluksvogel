@@ -1,0 +1,27 @@
+---
+import homepage from "../data/verhalen.json";
+import { getCollection } from "astro:content";
+import { formatDate } from "../lib/format";
+
+interface Props {
+  /** Toegankelijk label. Alle verhalen */
+  ariaLabel?: string;
+  /** Linktekst. Lees verder */
+  linkLabel?: string;
+}
+
+const {
+  ariaLabel = homepage.overzicht.ariaLabel,
+  linkLabel = homepage.overzicht.linkLabel,
+} = Astro.props;
+const stories = (await getCollection("verhalen")).sort((a, b) => b.data.order - a.data.order);
+---
+<section class="section">
+  <div class="wrap">
+    <ul class="cards cols-3" aria-label={ariaLabel}>
+      {stories.map((story) => (
+        <li class="reveal"><a class="card wide" href={`/${story.id}/`}><div class="media"><img src={story.data.image} alt={story.data.imageAlt} width="1200" height="800" loading="lazy"></div><span class="cat">{story.data.category} · {formatDate(story.data.date)}</span><h3>{story.data.title}</h3><p class="excerpt">{story.data.description}</p><span class="text-link"><span data-cms="verhalen.overzicht.linkLabel">{linkLabel}</span> <svg class="arrow" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 7h50M44 1l6 6-6 6"/></svg></span></a></li>
+      ))}
+    </ul>
+  </div>
+</section>

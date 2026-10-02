@@ -1,0 +1,48 @@
+---
+import homepage from "../data/veelgesteldevragen.json";
+
+interface Props {
+  /** Titel. De mobiele kippenkar */
+  headline?: string;
+  /** Vraag. Waar rijden de mobiele kippenkarren van GeluksVogel rond? */
+  question?: string;
+  /** Antwoord. De mobiele kippenkarren rijden op dit moment in Brabant, op de Veluwe en in Friesland rond. We hopen */
+  answer?: string;
+  /** Vraag 2. Hoe word je GeluksVogel boer? */
+  question2?: string;
+  /** Antwoord 2. Je wordt GeluksVogel boer als je zoveel biologisch grasland hebt dat elke kip minimaal 4 m² tot haar */
+  answer2?: string;
+  /** Tekst. Meer weten? */
+  paragraph?: string;
+  /** Linktekst. Neem contact met ons op! */
+  linkLabel?: string;
+  /** Link. /contact/ */
+  href?: string;
+}
+
+const {
+  headline = homepage.kippenkar.headline,
+  question = homepage.kippenkar.question,
+  answer = homepage.kippenkar.answer,
+  question2 = homepage.kippenkar.question2,
+  answer2 = homepage.kippenkar.answer2,
+  paragraph = homepage.kippenkar.paragraph,
+  linkLabel = homepage.kippenkar.linkLabel,
+  href = homepage.kippenkar.href,
+} = Astro.props;
+
+---
+<section class="section faq-group">
+  <div class="wrap">
+    <h2 data-cms="veelgesteldevragen.kippenkar.headline">{headline}</h2>
+    <div class="faq">
+      <div>
+        <details class="reveal"><summary data-cms="veelgesteldevragen.kippenkar.question">{question}</summary><div data-cms="veelgesteldevragen.kippenkar.answer" class="answer">{answer}</div></details>
+      </div>
+      <div>
+        <details class="reveal"><summary data-cms="veelgesteldevragen.kippenkar.question2">{question2}</summary><div data-cms="veelgesteldevragen.kippenkar.answer2" class="answer">{answer2}</div></details>
+      </div>
+    </div>
+    <p class="faq-more"><span data-cms="veelgesteldevragen.kippenkar.paragraph">{paragraph}</span> <a class="text-link" href={href}><span data-cms="veelgesteldevragen.kippenkar.linkLabel">{linkLabel}</span> <svg class="arrow" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 7h50M44 1l6 6-6 6"/></svg></a></p>
+  </div>
+</section>

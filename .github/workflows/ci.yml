@@ -1,0 +1,83 @@
+name: Build and deploy GeluksVogel
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: geluksvogel-staging-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Get the Stacki parser
+        uses: actions/checkout@v4
+        with:
+          repository: flowtricks/stacki
+          ref: e5e63d8fc2cae38a69ebb789de1e709c5ca02958
+          path: .stacki-check
+          persist-credentials: false
+      - run: npm run check
+      - run: npm run stacki:check
+        env:
+          STACKI_SRC: ${{ github.workspace }}/.stacki-check
+      - run: npm run cms:sync -- --check
+      - run: npm run cms:config -- --check
+      - run: node scripts/cms-anchors.mjs --check
+      - run: npm test
+      - run: npm run build:staging
+        env:
+          DECAPBRIDGE_SITE_ID: ${{ vars.DECAPBRIDGE_SITE_ID }}
+          VIMEXX_FORCE_HTTPS_REDIRECT: ${{ vars.VIMEXX_FORCE_HTTPS_REDIRECT }}
+          DEPLOY_TARGET: ${{ vars.DEPLOY_TARGET || 'production' }}
+      - run: node scripts/validate-staging.mjs
+        env:
+          DEPLOY_TARGET: ${{ vars.DEPLOY_TARGET || 'production' }}
+      - run: npm run test:site
+      - uses: actions/upload-artifact@v4
+        with:
+          name: geluksvogel-static-site
+          path: dist/
+          retention-days: 14
+          include-hidden-files: true
+      - name: Deploy GeluksVogel over verified SSH and confirm the upload
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.VIMEXX_DEPLOY_ENABLED == 'true'
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.VIMEXX_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.VIMEXX_SSH_KNOWN_HOSTS }}
+          DEPLOY_SSH_HOST: ${{ vars.VIMEXX_SSH_HOST }}
+          DEPLOY_SSH_USER: ${{ vars.VIMEXX_SSH_USER }}
+          DEPLOY_SSH_PORT: ${{ vars.VIMEXX_SSH_PORT }}
+          DEPLOY_WEBROOT: ${{ vars.VIMEXX_WEBROOT }}
+          DEPLOY_RELEASE_ID: ${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          : "${SSH_PRIVATE_KEY:?Missing VIMEXX_SSH_PRIVATE_KEY}"
+          : "${SSH_KNOWN_HOSTS:?Missing VIMEXX_SSH_KNOWN_HOSTS}"
+          umask 077
+          deploy_temp=$(mktemp -d)
+          trap 'rm -f "$deploy_temp/id_ed25519" "$deploy_temp/known_hosts"; rmdir "$deploy_temp"' EXIT
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$deploy_temp/id_ed25519"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$deploy_temp/known_hosts"
+          export DEPLOY_KEY_FILE="$deploy_temp/id_ed25519"
+          export DEPLOY_KNOWN_HOSTS_FILE="$deploy_temp/known_hosts"
+          npm run deploy:staging
+      - name: Verify public website matches this build
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.VIMEXX_DEPLOY_ENABLED == 'true'
+        env:
+          DEPLOY_SSH_HOST: ${{ vars.VIMEXX_SSH_HOST }}
+        run: npm run verify:staging

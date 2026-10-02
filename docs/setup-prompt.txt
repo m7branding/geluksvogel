@@ -1,0 +1,80 @@
+Ik ben een nieuwe collega en wil de bestaande GeluksVogel-website op mijn computer
+openen en bewerken met jou en Stacki. Richt de lokale werkomgeving in en
+controleer dat deze werkt. Leg handelingen die ik zelf moet doen eenvoudig uit.
+
+Project: https://github.com/m7branding/geluksvogel
+Het project gebruikt Astro, Stacki en een lokaal Decap CMS.
+Dit is een installatieopdracht: behoud het bestaande ontwerp en de inhoud.
+
+1. Controleer mijn besturingssysteem, je werkmap en aanwezige software.
+   Werk lokaal op mijn computer, in dezelfde projectmap die straks in Stacki
+   opengaat. Maak voor deze installatie geen aparte worktree of cloudomgeving.
+   Als de sessie daar toch in draait, help mij eerst de lokale map te openen.
+   Gebruik op Windows native Windows-tools en Git Bash voor de bash-launcher;
+   meng deze installatie niet met een WSL-omgeving.
+
+2. Controleer Git, Node.js, npm en GitHub CLI (gh). Installeer ontbrekende
+   onderdelen via officiële bronnen, passend bij mijn computer. Gebruik bij
+   een nieuwe Node-installatie de nieuwste patch van Node 22 LTS, minimaal
+   22.12.0, overeenkomstig de project-CI. Een bestaande ondersteunde,
+   compatibele Node-versie mag blijven. Astro komt via de projectdependencies.
+   Heropen zo nodig de terminal/app zodat geïnstalleerde tools vindbaar zijn.
+   Voer de installatie uit waar je dat kunt; geef mij een concrete volgende
+   stap als een systeemdialoog, beheerder of browserlogin nodig is.
+
+3. Controleer of GitHub CLI met MIJN eigen GitHub-account is ingelogd.
+   Gebruik zo nodig:
+   gh auth login --hostname github.com --git-protocol https --web
+   gh auth setup-git --hostname github.com
+   Laat mij de browserlogin zelf afronden. Vraag geen wachtwoord of token in
+   de chat. Controleer mijn toegang tot m7branding/geluksvogel, bijvoorbeeld met
+   gh repo view m7branding/geluksvogel --json viewerPermission
+   Meld of ik schrijfrechten heb; als die ontbreken kan de lokale installatie
+   wel doorgaan, maar moet de beheerder mij nog toegang geven voor pushen.
+
+4. Clone https://github.com/m7branding/geluksvogel.git op branch main naar de geopende
+   lege projectmap. Clone alleen rechtstreeks met git clone ... . als de map
+   leeg is en niet binnen een andere repository ligt. Als de juiste repository
+   al bestaat, controleer dan remote, branch en lokale wijzigingen en hergebruik
+   die. Overschrijf geen bestaande bestanden. Kies bij een andere gevulde map
+   een vrije map zoals ~/Documents/Projecten/geluksvogel en laat mij die openen.
+   Maak geen nieuwe GitHub-repository of fork. Lees vervolgens README.md en de
+   projectinstructies. Gebruik de actuele projectbestanden als bron voor scripts.
+   Controleer Git user.name en user.email; vraag mijn gewenste commitnaam en
+   e-mailadres als ze ontbreken en configureer die alleen voor dit project.
+
+5. Installeer Stacki apart van de website in ~/Downloads/stacki-main vanuit
+   https://github.com/flowtricks/stacki.git. Gebruik voor een nieuwe installatie
+   commit e5e63d8fc2cae38a69ebb789de1e709c5ca02958 (Stacki 0.1.23), dezelfde versie
+   als in de GeluksVogel-CI. Voer in de Stacki-map npm ci uit. Bestaat de map al,
+   inspecteer die eerst; reset of overschrijf een bestaande installatie niet.
+   Gebruik zo nodig een aparte map en geef STACKI_SRC mee aan zowel de launcher
+   als de Stacki-controle. Installeer eventuele native buildtools alleen als
+   een concrete installatiefout daar aanleiding toe geeft.
+
+6. Voer in de GeluksVogel-projectmap npm ci uit, gevolgd door:
+   npm run check
+   npm run stacki:check
+   npm run cms:sync -- --check
+   npm run cms:config -- --check
+   npm test
+   npm run build
+   npm run test:site
+   Los installatieproblemen op. Als projectcode de oorzaak van een fout is,
+   meld die concreet voordat je de website wijzigt. Claim alleen geslaagde
+   controles die je daadwerkelijk hebt uitgevoerd.
+
+7. Start vanuit de GeluksVogel-map npm run stacki en houd het proces open.
+   Deze launcher haalt eerst origin/main op en start ook de CMS-sync-watcher.
+   Gebruik hem voor deze startroute op main. Start geen tweede watcher of
+   overbodige Astro-server. Geef mij het volledige pad dat ik in Stacki via
+   Open Project moet kiezen; Stacki verzorgt zelf de websitepreview.
+   Controleer zover je toegang reikt of de homepage zichtbaar is, pagina's
+   visueel openen en de watcher draait. Benoem wat ik zelf nog moet bekijken.
+
+Rond af met de projectmap, startopdracht, gebruikte versies, GitHub-account,
+branch, uitslag van controles en eventuele ontbrekende schrijfrechten.
+Leg kort uit hoe ik de volgende keer start en hoe commit en push werken.
+Maak tijdens deze installatie geen commit of push en stel geen live hosting,
+SSH of productie-CMS in. Het lokale CMS is optioneel; leg desgewenst uit hoe
+ik dat kan starten. Voor deze lokale setup zijn geen hostinggegevens nodig.

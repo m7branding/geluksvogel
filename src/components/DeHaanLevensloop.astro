@@ -1,0 +1,69 @@
+---
+import homepage from "../data/de-haan.json";
+
+interface Props {
+  /** Bovenkop. De kip */
+  eyebrow?: string;
+  /** Titel. De haan */
+  headline?: string;
+  /** Afbeelding. /assets/img/home/de-haan.jpg */
+  image?: string;
+  /** Alt-tekst. Een witte GeluksVogel haan tussen de bruine hennen */
+  imageAlt?: string;
+  /** Week. Week 0 */
+  week?: string;
+  /** Tekst. geboren bij de boerderij, meteen naar GeluksVogel */
+  text?: string;
+  /** Week 2. Week 6 */
+  week2?: string;
+  /** Tekst 2. naar het onderste deel van de mancave */
+  text2?: string;
+  /** Week 3. Week 8 */
+  week3?: string;
+  /** Tekst 3. de mannen mogen naar buiten */
+  text3?: string;
+  /** Week 4. Week 11 */
+  week4?: string;
+  /** Tekst 4. de eerste hanen gaan kukelen */
+  text4?: string;
+  /** Week 5. Week 14-15 */
+  week5?: string;
+  /** Tekst 5. naar de slacht */
+  text5?: string;
+}
+
+const {
+  eyebrow = homepage.levensloop.eyebrow,
+  headline = homepage.levensloop.headline,
+  image = homepage.levensloop.image,
+  imageAlt = homepage.levensloop.imageAlt,
+  week = homepage.levensloop.week,
+  text = homepage.levensloop.text,
+  week2 = homepage.levensloop.week2,
+  text2 = homepage.levensloop.text2,
+  week3 = homepage.levensloop.week3,
+  text3 = homepage.levensloop.text3,
+  week4 = homepage.levensloop.week4,
+  text4 = homepage.levensloop.text4,
+  week5 = homepage.levensloop.week5,
+  text5 = homepage.levensloop.text5,
+} = Astro.props;
+
+---
+<section class="section">
+  <div class="wrap">
+    <div class="section-head center"><div><p data-cms="de-haan.levensloop.eyebrow" class="eyebrow">{eyebrow}</p><h1 data-cms="de-haan.levensloop.headline" class="section-title">{headline}</h1></div></div>
+    <div class="lifecycle">
+      <ol class="reveal">
+        <li><span data-cms="de-haan.levensloop.week" class="week">{week}</span><span data-cms="de-haan.levensloop.text" class="what">{text}</span></li>
+        <li><span data-cms="de-haan.levensloop.week2" class="week">{week2}</span><span data-cms="de-haan.levensloop.text2" class="what">{text2}</span></li>
+        <li><span data-cms="de-haan.levensloop.week3" class="week">{week3}</span><span data-cms="de-haan.levensloop.text3" class="what">{text3}</span></li>
+      </ol>
+      <figure class="reveal"><img data-cms="de-haan.levensloop.image" src={image} alt={imageAlt} width="1600" height="1067" loading="lazy"></figure>
+      <ol class="reveal" start="4">
+        <li><span data-cms="de-haan.levensloop.week4" class="week">{week4}</span><span data-cms="de-haan.levensloop.text4" class="what">{text4}</span></li>
+        <li><span data-cms="de-haan.levensloop.week5" class="week">{week5}</span><span data-cms="de-haan.levensloop.text5" class="what">{text5}</span></li>
+      </ol>
+    </div>
+  </div>
+</section>

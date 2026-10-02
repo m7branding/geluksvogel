@@ -1,0 +1,70 @@
+---
+import homepage from "../data/producten.json";
+
+interface Props {
+  /** Titel. Vleesproducten */
+  headline?: string;
+  /** Afbeelding. /assets/img/producten/hanensoep.png */
+  image?: string;
+  /** Alt-tekst. Een pot biologische GeluksVogel hanensoep */
+  imageAlt?: string;
+  /** Subtitel. Hanensoep */
+  subheading?: string;
+  /** Tekst. Het vlees van deze hanen is uniek van smaak omdat ze langzaam zijn gegroeid, veel beweging hebben ge */
+  paragraph?: string;
+  /** Tekst 2. Hanensoep is in de natuurvoedingswinkel in conservenpotten verkrijgbaar. Deze (h)eerlijk smakende po */
+  paragraph2?: string;
+  /** Afbeelding 2. /assets/img/producten/man-in-de-pan.jpg */
+  image2?: string;
+  /** Alt-tekst 2. Een gele pan van Man in de Pan */
+  imageAlt2?: string;
+  /** Subtitel 2. Man in de pan */
+  subheading2?: string;
+  /** Tekst 3. Geluksvogel is nauw betrokken bij Man in de Pan, een landelijk initiatief ter promotie van het biolo */
+  paragraph3?: string;
+  /** Tekst 4. Je kunt hier meer over lezen op de website */
+  paragraph4?: string;
+  /** Linktekst. manindepan.nl */
+  linkLabel?: string;
+  /** Link. https://manindepan.nl/ */
+  href?: string;
+}
+
+const {
+  headline = homepage.vlees.headline,
+  image = homepage.vlees.image,
+  imageAlt = homepage.vlees.imageAlt,
+  subheading = homepage.vlees.subheading,
+  paragraph = homepage.vlees.paragraph,
+  paragraph2 = homepage.vlees.paragraph2,
+  image2 = homepage.vlees.image2,
+  imageAlt2 = homepage.vlees.imageAlt2,
+  subheading2 = homepage.vlees.subheading2,
+  paragraph3 = homepage.vlees.paragraph3,
+  paragraph4 = homepage.vlees.paragraph4,
+  linkLabel = homepage.vlees.linkLabel,
+  href = homepage.vlees.href,
+} = Astro.props;
+
+---
+<section class="section bg-cream" id="vlees">
+  <div class="wrap">
+    <h2 data-cms="producten.vlees.headline" class="products-title reveal">{headline}</h2>
+    <div class="product-row split reverse">
+      <figure class="split-media reveal"><img data-cms="producten.vlees.image" src={image} alt={imageAlt} width="500" height="500" loading="lazy"></figure>
+      <div class="prose reveal">
+        <h3 data-cms="producten.vlees.subheading">{subheading}</h3>
+        <p data-cms="producten.vlees.paragraph">{paragraph}</p>
+        <p data-cms="producten.vlees.paragraph2">{paragraph2}</p>
+      </div>
+    </div>
+    <div class="product-row split">
+      <figure class="split-media reveal"><img data-cms="producten.vlees.image2" src={image2} alt={imageAlt2} width="445" height="333" loading="lazy"></figure>
+      <div class="prose reveal">
+        <h3 data-cms="producten.vlees.subheading2">{subheading2}</h3>
+        <p data-cms="producten.vlees.paragraph3">{paragraph3}</p>
+        <p data-cms="producten.vlees.paragraph4">{paragraph4} <a data-cms="producten.vlees.linkLabel" href={href} rel="noopener">{linkLabel}</a></p>
+      </div>
+    </div>
+  </div>
+</section>

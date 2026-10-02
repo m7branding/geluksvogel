@@ -1,0 +1,59 @@
+---
+import homepage from "../data/veelgesteldevragen.json";
+
+interface Props {
+  /** Titel. GeluksVogel hanen */
+  headline?: string;
+  /** Vraag. Hebben jullie evenveel hennen als hanen? */
+  question?: string;
+  /** Antwoord. We hebben eigenlijk meer hanen dan hennen. In de kippenkar wonen 244 hennen en 5 hanen. Daarnaast he */
+  answer?: string;
+  /** Vraag 2. Zijn jullie eieren bevrucht omdat er hanen in de kar lopen? */
+  question2?: string;
+  /** Antwoord 2. De hanen in de kippenkar bevruchten de dames regelmatig, dit zijn pas de ECHTE GeluksVogels. Bevruch */
+  answer2?: string;
+  /** Vraag 3. Wat eten jullie hanen? */
+  question3?: string;
+  /** Antwoord 3. Onze kippen lopen elke dag buiten en krijgen, omdat ze in mobiele kippenkarren wonen, elke week een  */
+  answer3?: string;
+  /** Vraag 4. Wat doen jullie met het vlees van de hanen? */
+  question4?: string;
+  /** Antwoord 4. GeluksVogel heeft, in samenwerking met de groothandel, een waardig eindproduct ontwikkeld wat gemaak */
+  answer4?: string;
+  /** Vraag 5. Tot welke leeftijd mag een GeluksVogel haan blijven? */
+  question5?: string;
+  /** Antwoord 5. Een traditionele vleeskip mag 5 tot 6 weken leven voordat hij/zij naar de slacht gaat. Een scharrelk */
+  answer5?: string;
+}
+
+const {
+  headline = homepage.hanen.headline,
+  question = homepage.hanen.question,
+  answer = homepage.hanen.answer,
+  question2 = homepage.hanen.question2,
+  answer2 = homepage.hanen.answer2,
+  question3 = homepage.hanen.question3,
+  answer3 = homepage.hanen.answer3,
+  question4 = homepage.hanen.question4,
+  answer4 = homepage.hanen.answer4,
+  question5 = homepage.hanen.question5,
+  answer5 = homepage.hanen.answer5,
+} = Astro.props;
+
+---
+<section class="section faq-group bg-cream">
+  <div class="wrap">
+    <h2 data-cms="veelgesteldevragen.hanen.headline">{headline}</h2>
+    <div class="faq">
+      <div>
+        <details class="reveal"><summary data-cms="veelgesteldevragen.hanen.question">{question}</summary><div data-cms="veelgesteldevragen.hanen.answer" class="answer">{answer}</div></details>
+        <details class="reveal"><summary data-cms="veelgesteldevragen.hanen.question2">{question2}</summary><div data-cms="veelgesteldevragen.hanen.answer2" class="answer">{answer2}</div></details>
+        <details class="reveal"><summary data-cms="veelgesteldevragen.hanen.question3">{question3}</summary><div data-cms="veelgesteldevragen.hanen.answer3" class="answer">{answer3}</div></details>
+      </div>
+      <div>
+        <details class="reveal"><summary data-cms="veelgesteldevragen.hanen.question4">{question4}</summary><div data-cms="veelgesteldevragen.hanen.answer4" class="answer">{answer4}</div></details>
+        <details class="reveal"><summary data-cms="veelgesteldevragen.hanen.question5">{question5}</summary><div data-cms="veelgesteldevragen.hanen.answer5" class="answer">{answer5}</div></details>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,144 @@
+---
+import homepage from "../data/site.json";
+
+interface Props {
+  /** Actieve navigatiegroep. */
+  activeNav?: string;
+  /** Adres van de huidige pagina. */
+  currentPath?: string;
+  /** Linktekst naar inhoud. Naar de inhoud */
+  skipLabel?: string;
+  /** Toegankelijk label logo. GeluksVogel — home */
+  homeLabel?: string;
+  /** Link. / */
+  href?: string;
+  /** Afbeelding. /assets/brand/logo.svg */
+  image?: string;
+  /** Alt-tekst. GeluksVogel.bio */
+  imageAlt?: string;
+  /** Afbeelding 2. /assets/brand/logo-white.svg */
+  image2?: string;
+  /** Naam van het menu. Hoofdmenu */
+  navLabel?: string;
+  /** Linktekst. Home */
+  linkLabel?: string;
+  /** Link 2. / */
+  href2?: string;
+  /** Linktekst 2. Ons verhaal */
+  linkLabel2?: string;
+  /** Link 3. /onsverhaal/ */
+  href3?: string;
+  /** Linktekst 3. De kip */
+  linkLabel3?: string;
+  /** Link 4. /de-kip/ */
+  href4?: string;
+  /** Linktekst 4. De hen */
+  linkLabel4?: string;
+  /** Link 5. /de-hen/ */
+  href5?: string;
+  /** Linktekst 5. De haan */
+  linkLabel5?: string;
+  /** Link 6. /de-haan/ */
+  href6?: string;
+  /** Linktekst 6. Producten */
+  linkLabel6?: string;
+  /** Link 7. /producten/ */
+  href7?: string;
+  /** Linktekst 7. Recepten */
+  linkLabel7?: string;
+  /** Link 8. /recepten/ */
+  href8?: string;
+  /** Linktekst 8. Veelgestelde vragen */
+  linkLabel8?: string;
+  /** Link 9. /veelgesteldevragen/ */
+  href9?: string;
+  /** Linktekst 9. Contact */
+  linkLabel9?: string;
+  /** Link 10. /contact/ */
+  href10?: string;
+  /** Knop menu openen. Menu openen */
+  menuLabel?: string;
+  /** Knop menu sluiten. Menu sluiten */
+  closeLabel?: string;
+}
+
+const {
+  skipLabel = homepage.header.skipLabel,
+  homeLabel = homepage.header.homeLabel,
+  href = homepage.header.href,
+  image = homepage.header.image,
+  imageAlt = homepage.header.imageAlt,
+  image2 = homepage.header.image2,
+  navLabel = homepage.header.navLabel,
+  linkLabel = homepage.header.linkLabel,
+  href2 = homepage.header.href2,
+  linkLabel2 = homepage.header.linkLabel2,
+  href3 = homepage.header.href3,
+  linkLabel3 = homepage.header.linkLabel3,
+  href4 = homepage.header.href4,
+  linkLabel4 = homepage.header.linkLabel4,
+  href5 = homepage.header.href5,
+  linkLabel5 = homepage.header.linkLabel5,
+  href6 = homepage.header.href6,
+  linkLabel6 = homepage.header.linkLabel6,
+  href7 = homepage.header.href7,
+  linkLabel7 = homepage.header.linkLabel7,
+  href8 = homepage.header.href8,
+  linkLabel8 = homepage.header.linkLabel8,
+  href9 = homepage.header.href9,
+  linkLabel9 = homepage.header.linkLabel9,
+  href10 = homepage.header.href10,
+  menuLabel = homepage.header.menuLabel,
+  closeLabel = homepage.header.closeLabel,
+  activeNav = "",
+  currentPath = "/",
+} = Astro.props;
+const is = (target: string) => (target === currentPath ? "page" : undefined);
+---
+<a data-cms="site.header.skipLabel" class="skip" href="#main">{skipLabel}</a>
+
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <nav class="nav-wrap" aria-label={navLabel}>
+      <ul class="nav nav-left">
+        <li><a data-cms="site.header.linkLabel" href={href2} aria-current={is(href2)}>{linkLabel}</a></li>
+        <li><a data-cms="site.header.linkLabel2" href={href3} aria-current={is(href3)}>{linkLabel2}</a></li>
+        <li class:list={["has-dropdown", { current: activeNav === "de-kip" }]}>
+          <a data-cms="site.header.linkLabel3" href={href4} aria-current={is(href4)}>{linkLabel3}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a>
+          <ul class="dropdown">
+            <li><a data-cms="site.header.linkLabel4" href={href5} aria-current={is(href5)}>{linkLabel4}</a></li>
+            <li><a data-cms="site.header.linkLabel5" href={href6} aria-current={is(href6)}>{linkLabel5}</a></li>
+          </ul>
+        </li>
+        <li><a data-cms="site.header.linkLabel6" href={href7} aria-current={is(href7)}>{linkLabel6}</a></li>
+      </ul>
+      <a class="logo" href={href} aria-label={homeLabel}><img data-cms="site.header.image" src={image} alt={imageAlt} width="376" height="458"></a>
+      <ul class="nav nav-right">
+        <li><a data-cms="site.header.linkLabel7" href={href8} aria-current={is(href8)}>{linkLabel7}</a></li>
+        <li><a data-cms="site.header.linkLabel8" href={href9} aria-current={is(href9)}>{linkLabel8}</a></li>
+        <li><a data-cms="site.header.linkLabel9" href={href10} aria-current={is(href10)}>{linkLabel9}</a></li>
+      </ul>
+    </nav>
+    <button type="button" class="menu-toggle" aria-label={menuLabel} aria-controls="mobile-menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 7h18M3 12h18M7 17h14"/></svg></button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu" aria-label={navLabel} hidden>
+  <div class="wrap">
+    <div class="top">
+      <a href={href} aria-label={homeLabel}><img data-cms="site.header.image2" src={image2} alt={imageAlt} width="376" height="458"></a>
+      <button type="button" class="close" aria-label={closeLabel}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg></button>
+    </div>
+    <ul>
+      <li><a data-cms="site.header.linkLabel" href={href2} aria-current={is(href2)}>{linkLabel}</a></li>
+      <li><a data-cms="site.header.linkLabel2" href={href3} aria-current={is(href3)}>{linkLabel2}</a></li>
+      <li><a data-cms="site.header.linkLabel3" href={href4} aria-current={is(href4)}>{linkLabel3}</a></li>
+      <li class="sub"><a data-cms="site.header.linkLabel4" href={href5} aria-current={is(href5)}>{linkLabel4}</a></li>
+      <li class="sub"><a data-cms="site.header.linkLabel5" href={href6} aria-current={is(href6)}>{linkLabel5}</a></li>
+      <li><a data-cms="site.header.linkLabel6" href={href7} aria-current={is(href7)}>{linkLabel6}</a></li>
+      <li><a data-cms="site.header.linkLabel7" href={href8} aria-current={is(href8)}>{linkLabel7}</a></li>
+      <li><a data-cms="site.header.linkLabel8" href={href9} aria-current={is(href9)}>{linkLabel8}</a></li>
+      <li><a data-cms="site.header.linkLabel9" href={href10} aria-current={is(href10)}>{linkLabel9}</a></li>
+    </ul>
+  </div>
+</div>

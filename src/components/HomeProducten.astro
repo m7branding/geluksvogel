@@ -1,0 +1,53 @@
+---
+import homepage from "../data/homepage.json";
+
+interface Props {
+  /** Bovenkop. Onze producten */
+  eyebrow?: string;
+  /** Afbeelding. /assets/img/home/eieren.jpg */
+  image?: string;
+  /** Alt-tekst. Biologische eieren in een mandje en een eierdoosje */
+  imageAlt?: string;
+  /** Titel. Eieren */
+  headline?: string;
+  /** Link. /producten/#eieren */
+  href?: string;
+  /** Afbeelding 2. /assets/img/home/vlees.jpg */
+  image2?: string;
+  /** Alt-tekst 2. Een witte haan scharrelt tussen de hennen */
+  imageAlt2?: string;
+  /** Titel 2. Vlees */
+  headline2?: string;
+  /** Link 2. /producten/#vlees */
+  href2?: string;
+  /** Linktekst. Onze producten */
+  linkLabel?: string;
+  /** Link 3. /producten/ */
+  href3?: string;
+}
+
+const {
+  eyebrow = homepage.producten.eyebrow,
+  image = homepage.producten.image,
+  imageAlt = homepage.producten.imageAlt,
+  headline = homepage.producten.headline,
+  href = homepage.producten.href,
+  image2 = homepage.producten.image2,
+  imageAlt2 = homepage.producten.imageAlt2,
+  headline2 = homepage.producten.headline2,
+  href2 = homepage.producten.href2,
+  linkLabel = homepage.producten.linkLabel,
+  href3 = homepage.producten.href3,
+} = Astro.props;
+
+---
+<section class="section" id="producten">
+  <div class="wrap">
+    <h2 data-cms="homepage.producten.eyebrow" class="visually-hidden">{eyebrow}</h2>
+    <div class="products">
+      <a class="tile framed reveal" href={href}><img data-cms="homepage.producten.image" src={image} alt={imageAlt} width="934" height="1400" loading="lazy"><span class="tile-label"><strong data-cms="homepage.producten.headline">{headline}</strong></span></a>
+      <a class="tile framed reveal" href={href2}><img data-cms="homepage.producten.image2" src={image2} alt={imageAlt2} width="934" height="1400" loading="lazy"><span class="tile-label"><strong data-cms="homepage.producten.headline2">{headline2}</strong></span></a>
+    </div>
+    <p class="products-foot"><a class="text-link" href={href3}><span data-cms="homepage.producten.linkLabel">{linkLabel}</span> <svg class="arrow" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 7h50M44 1l6 6-6 6"/></svg></a></p>
+  </div>
+</section>

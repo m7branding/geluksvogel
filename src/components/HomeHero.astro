@@ -1,0 +1,89 @@
+---
+import homepage from "../data/homepage.json";
+
+interface Props {
+  /** Titel. GeluksVogel: gelukkigere biologische eieren en hanenvlees */
+  title?: string;
+  /** Afbeelding. /assets/img/home/kippenkar-weide.jpg */
+  image?: string;
+  /** Alt-tekst. Een mobiele kippenkar van GeluksVogel in een groene wei met paardenbloemen */
+  imageAlt?: string;
+  /** Titel. Onze eitjes brengen geluk! */
+  headline?: string;
+  /** Afbeelding 2. /assets/img/home/kippen-in-de-wei.jpg */
+  image2?: string;
+  /** Alt-tekst 2. Kippen scharrelen rond de mobiele kippenkar */
+  imageAlt2?: string;
+  /** Titel 2. GeluksVogels in hun meest natuurlijke leefomgeving */
+  headline2?: string;
+  /** Afbeelding 3. /assets/img/home/biologische-eieren.jpg */
+  image3?: string;
+  /** Alt-tekst 3. Bruine biologische eieren in het stro naast een eierdoosje */
+  imageAlt3?: string;
+  /** Titel 3. 100% biologische eieren */
+  headline3?: string;
+  /** Afbeelding 4. /assets/img/home/heerlijk-eitje.jpg */
+  image4?: string;
+  /** Alt-tekst 4. Bruine hennen in de kippenkar */
+  imageAlt4?: string;
+  /** Titel 4. Het meest h-eerlijke eitje */
+  headline4?: string;
+  /** Afbeelding 5. /assets/img/home/met-liefde-geraapt.jpg */
+  image5?: string;
+  /** Alt-tekst 5. Een boer haalt een tray met verse eieren uit de kippenkar */
+  imageAlt5?: string;
+  /** Titel 5. Met liefde geraapt */
+  headline5?: string;
+  /** Knop vorige. Vorige foto */
+  prevLabel?: string;
+  /** Knop volgende. Volgende foto */
+  nextLabel?: string;
+}
+
+const {
+  title = homepage.hero.title,
+  image = homepage.hero.image,
+  imageAlt = homepage.hero.imageAlt,
+  headline = homepage.hero.headline,
+  image2 = homepage.hero.image2,
+  imageAlt2 = homepage.hero.imageAlt2,
+  headline2 = homepage.hero.headline2,
+  image3 = homepage.hero.image3,
+  imageAlt3 = homepage.hero.imageAlt3,
+  headline3 = homepage.hero.headline3,
+  image4 = homepage.hero.image4,
+  imageAlt4 = homepage.hero.imageAlt4,
+  headline4 = homepage.hero.headline4,
+  image5 = homepage.hero.image5,
+  imageAlt5 = homepage.hero.imageAlt5,
+  headline5 = homepage.hero.headline5,
+  prevLabel = homepage.hero.prevLabel,
+  nextLabel = homepage.hero.nextLabel,
+} = Astro.props;
+
+---
+<section class="hero" data-hero aria-roledescription="carousel" aria-label={title}>
+  <h1 data-cms="homepage.hero.title" class="visually-hidden">{title}</h1>
+  <ul class="slides">
+    <li class="slide is-active"><img data-cms="homepage.hero.image" src={image} alt={imageAlt} width="2200" height="1467" fetchpriority="high"></li>
+    <li class="slide"><img data-cms="homepage.hero.image2" src={image2} alt={imageAlt2} width="2200" height="1467" loading="lazy"></li>
+    <li class="slide"><img data-cms="homepage.hero.image3" src={image3} alt={imageAlt3} width="2200" height="1467" loading="lazy"></li>
+    <li class="slide"><img data-cms="homepage.hero.image4" src={image4} alt={imageAlt4} width="2200" height="1467" loading="lazy"></li>
+    <li class="slide"><img data-cms="homepage.hero.image5" src={image5} alt={imageAlt5} width="2200" height="1467" loading="lazy"></li>
+  </ul>
+  <div class="wrap hero-body">
+    <div class="hero-caption" aria-live="polite">
+      <p data-cms="homepage.hero.headline" class="is-active">{headline}</p>
+      <p data-cms="homepage.hero.headline2">{headline2}</p>
+      <p data-cms="homepage.hero.headline3">{headline3}</p>
+      <p data-cms="homepage.hero.headline4">{headline4}</p>
+      <p data-cms="homepage.hero.headline5">{headline5}</p>
+    </div>
+    <div class="hero-controls">
+      <span class="hero-progress" aria-hidden="true"></span>
+      <button type="button" class="prev" aria-label={prevLabel}><svg viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M52 7H2M8 1 2 7l6 6"/></svg></button>
+      <span class="hero-count"><span data-current>1</span><span class="sep" aria-hidden="true"></span><span>5</span></span>
+      <button type="button" class="next" aria-label={nextLabel}><svg viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 7h50M44 1l6 6-6 6"/></svg></button>
+    </div>
+  </div>
+</section>

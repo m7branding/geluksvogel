@@ -1,0 +1,227 @@
+---
+import homepage from "../data/onsverhaal.json";
+
+interface Props {
+  /** Titel. Het ontstaan van GeluksVogel in (Geluks)Vogelvlucht */
+  headline?: string;
+  /** Knop vorige. Vorige */
+  prevLabel?: string;
+  /** Knop volgende. Volgende */
+  nextLabel?: string;
+  /** Titel. De eerste kippenkar is gebouwd */
+  title?: string;
+  /** Datum. Januari 2018 */
+  date?: string;
+  /** Afbeelding. /assets/img/tijdlijn/01-kippenkar.png */
+  image?: string;
+  /** Alt-tekst. Tekening van de eerste mobiele kippenkar */
+  imageAlt?: string;
+  /** Titel 2. De huisstijl en verpakking is bepaald */
+  title2?: string;
+  /** Datum 2. April 2018 */
+  date2?: string;
+  /** Afbeelding 2. /assets/img/tijdlijn/02-huisstijl.jpg */
+  image2?: string;
+  /** Alt-tekst 2. De wikkels van de GeluksVogel eierdoosjes */
+  imageAlt2?: string;
+  /** Titel 3. Kippen wonen in mobiele kar */
+  title3?: string;
+  /** Datum 3. Mei 2018 */
+  date3?: string;
+  /** Afbeelding 3. /assets/img/tijdlijn/03-kippen.jpg */
+  image3?: string;
+  /** Alt-tekst 3. Een kip in het gras bij de kippenkar */
+  imageAlt3?: string;
+  /** Titel 4. De eerste eitjes naar de winkels! */
+  title4?: string;
+  /** Datum 4. Juni 2018 */
+  date4?: string;
+  /** Afbeelding 4. /assets/img/tijdlijn/04-eerste-eitjes.jpg */
+  image4?: string;
+  /** Alt-tekst 4. Een GeluksVogel eierdoosje in het stro */
+  imageAlt4?: string;
+  /** Titel 5. Koppel hanen wordt verwerkt tot vlees */
+  title5?: string;
+  /** Datum 5. Juli 2018 */
+  date5?: string;
+  /** Afbeelding 5. /assets/img/tijdlijn/05.jpg */
+  image5?: string;
+  /** Alt-tekst 5. Witte hanen in de wei */
+  imageAlt5?: string;
+  /** Titel 6. Hanenvlees op de vakbeurs */
+  title6?: string;
+  /** Datum 6. Januari 2019 */
+  date6?: string;
+  /** Afbeelding 6. /assets/img/tijdlijn/06.jpg */
+  image6?: string;
+  /** Alt-tekst 6. Een pan van Man in de Pan op de vakbeurs */
+  imageAlt6?: string;
+  /** Titel 7. Hoera! We zijn een besloten vennootschap geworden */
+  title7?: string;
+  /** Datum 7. Mei 2019 */
+  date7?: string;
+  /** Afbeelding 7. /assets/img/tijdlijn/07.jpg */
+  image7?: string;
+  /** Alt-tekst 7. Het ondertekenen bij de notaris */
+  imageAlt7?: string;
+  /** Titel 8. Verandering van ras; bruine hennen en witte hanen */
+  title8?: string;
+  /** Datum 8. Augustus 2019 */
+  date8?: string;
+  /** Afbeelding 8. /assets/img/tijdlijn/08.jpg */
+  image8?: string;
+  /** Alt-tekst 8. Bruine hennen en witte hanen bij de kippenkar */
+  imageAlt8?: string;
+  /** Titel 9. Kunst van afgekeurde eieren */
+  title9?: string;
+  /** Datum 9. Oktober 2019 */
+  date9?: string;
+  /** Afbeelding 9. /assets/img/tijdlijn/09.jpg */
+  image9?: string;
+  /** Alt-tekst 9. Een kunstwerk gemaakt van een afgekeurd ei */
+  imageAlt9?: string;
+  /** Titel 10. De eerste boer sluit aan */
+  title10?: string;
+  /** Datum 10. December 2019 */
+  date10?: string;
+  /** Afbeelding 10. /assets/img/tijdlijn/10.jpg */
+  image10?: string;
+  /** Alt-tekst 10. Een boer bij zijn mobiele kippenkar */
+  imageAlt10?: string;
+  /** Titel 11. Met onze Mancave voor hanen op de vakbeurs */
+  title11?: string;
+  /** Datum 11. Januari 2020 */
+  date11?: string;
+  /** Afbeelding 11. /assets/img/tijdlijn/11.jpg */
+  image11?: string;
+  /** Alt-tekst 11. De Mancave voor hanen op de vakbeurs */
+  imageAlt11?: string;
+  /** Titel 12. Kunst van afgekeurde eieren wordt verkocht in Rijksmuseum */
+  title12?: string;
+  /** Datum 12. Mei 2020 */
+  date12?: string;
+  /** Afbeelding 12. /assets/img/tijdlijn/12.jpg */
+  image12?: string;
+  /** Alt-tekst 12. Kunst van een afgekeurd ei */
+  imageAlt12?: string;
+  /** Titel 13. Onze tweede Mancave is een feit! */
+  title13?: string;
+  /** Datum 13. Februari 2021 */
+  date13?: string;
+  /** Afbeelding 13. /assets/img/tijdlijn/13.jpg */
+  image13?: string;
+  /** Alt-tekst 13. De tweede Mancave in het veld */
+  imageAlt13?: string;
+  /** Titel 14. Een nieuw GeluksVogel product, onze Hanensoep */
+  title14?: string;
+  /** Datum 14. Februari 2021 */
+  date14?: string;
+  /** Afbeelding 14. /assets/img/tijdlijn/14.jpg */
+  image14?: string;
+  /** Alt-tekst 14. Potten GeluksVogel hanensoep in de winkel */
+  imageAlt14?: string;
+  /** Titel 15. Welkom mannen! */
+  title15?: string;
+  /** Datum 15. Februari 2021 */
+  date15?: string;
+  /** Afbeelding 15. /assets/img/tijdlijn/15.jpg */
+  image15?: string;
+  /** Alt-tekst 15. Pas geboren haantjes onder de warmtelamp */
+  imageAlt15?: string;
+}
+
+const {
+  headline = homepage.tijdlijn.headline,
+  prevLabel = homepage.tijdlijn.prevLabel,
+  nextLabel = homepage.tijdlijn.nextLabel,
+  title = homepage.tijdlijn.title,
+  date = homepage.tijdlijn.date,
+  image = homepage.tijdlijn.image,
+  imageAlt = homepage.tijdlijn.imageAlt,
+  title2 = homepage.tijdlijn.title2,
+  date2 = homepage.tijdlijn.date2,
+  image2 = homepage.tijdlijn.image2,
+  imageAlt2 = homepage.tijdlijn.imageAlt2,
+  title3 = homepage.tijdlijn.title3,
+  date3 = homepage.tijdlijn.date3,
+  image3 = homepage.tijdlijn.image3,
+  imageAlt3 = homepage.tijdlijn.imageAlt3,
+  title4 = homepage.tijdlijn.title4,
+  date4 = homepage.tijdlijn.date4,
+  image4 = homepage.tijdlijn.image4,
+  imageAlt4 = homepage.tijdlijn.imageAlt4,
+  title5 = homepage.tijdlijn.title5,
+  date5 = homepage.tijdlijn.date5,
+  image5 = homepage.tijdlijn.image5,
+  imageAlt5 = homepage.tijdlijn.imageAlt5,
+  title6 = homepage.tijdlijn.title6,
+  date6 = homepage.tijdlijn.date6,
+  image6 = homepage.tijdlijn.image6,
+  imageAlt6 = homepage.tijdlijn.imageAlt6,
+  title7 = homepage.tijdlijn.title7,
+  date7 = homepage.tijdlijn.date7,
+  image7 = homepage.tijdlijn.image7,
+  imageAlt7 = homepage.tijdlijn.imageAlt7,
+  title8 = homepage.tijdlijn.title8,
+  date8 = homepage.tijdlijn.date8,
+  image8 = homepage.tijdlijn.image8,
+  imageAlt8 = homepage.tijdlijn.imageAlt8,
+  title9 = homepage.tijdlijn.title9,
+  date9 = homepage.tijdlijn.date9,
+  image9 = homepage.tijdlijn.image9,
+  imageAlt9 = homepage.tijdlijn.imageAlt9,
+  title10 = homepage.tijdlijn.title10,
+  date10 = homepage.tijdlijn.date10,
+  image10 = homepage.tijdlijn.image10,
+  imageAlt10 = homepage.tijdlijn.imageAlt10,
+  title11 = homepage.tijdlijn.title11,
+  date11 = homepage.tijdlijn.date11,
+  image11 = homepage.tijdlijn.image11,
+  imageAlt11 = homepage.tijdlijn.imageAlt11,
+  title12 = homepage.tijdlijn.title12,
+  date12 = homepage.tijdlijn.date12,
+  image12 = homepage.tijdlijn.image12,
+  imageAlt12 = homepage.tijdlijn.imageAlt12,
+  title13 = homepage.tijdlijn.title13,
+  date13 = homepage.tijdlijn.date13,
+  image13 = homepage.tijdlijn.image13,
+  imageAlt13 = homepage.tijdlijn.imageAlt13,
+  title14 = homepage.tijdlijn.title14,
+  date14 = homepage.tijdlijn.date14,
+  image14 = homepage.tijdlijn.image14,
+  imageAlt14 = homepage.tijdlijn.imageAlt14,
+  title15 = homepage.tijdlijn.title15,
+  date15 = homepage.tijdlijn.date15,
+  image15 = homepage.tijdlijn.image15,
+  imageAlt15 = homepage.tijdlijn.imageAlt15,
+} = Astro.props;
+
+---
+<section class="section bg-cream" data-slider>
+  <div class="wrap">
+    <div class="timeline-head">
+      <h2 data-cms="onsverhaal.tijdlijn.headline">{headline}</h2>
+      <div class="slider-buttons">
+        <button type="button" data-prev aria-label={prevLabel}><svg viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M22 6H2M7 1 2 6l5 5"/></svg></button>
+        <button type="button" data-next aria-label={nextLabel}><svg viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M0 6h20M15 1l5 5-5 5"/></svg></button>
+      </div>
+    </div>
+    <ol class="timeline" data-track tabindex="0" aria-label={headline}>
+      <li><div class="media contain"><img data-cms="onsverhaal.tijdlijn.image" src={image} alt={imageAlt} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date">{date}</time><h3 data-cms="onsverhaal.tijdlijn.title">{title}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image2" src={image2} alt={imageAlt2} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date2">{date2}</time><h3 data-cms="onsverhaal.tijdlijn.title2">{title2}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image3" src={image3} alt={imageAlt3} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date3">{date3}</time><h3 data-cms="onsverhaal.tijdlijn.title3">{title3}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image4" src={image4} alt={imageAlt4} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date4">{date4}</time><h3 data-cms="onsverhaal.tijdlijn.title4">{title4}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image5" src={image5} alt={imageAlt5} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date5">{date5}</time><h3 data-cms="onsverhaal.tijdlijn.title5">{title5}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image6" src={image6} alt={imageAlt6} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date6">{date6}</time><h3 data-cms="onsverhaal.tijdlijn.title6">{title6}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image7" src={image7} alt={imageAlt7} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date7">{date7}</time><h3 data-cms="onsverhaal.tijdlijn.title7">{title7}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image8" src={image8} alt={imageAlt8} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date8">{date8}</time><h3 data-cms="onsverhaal.tijdlijn.title8">{title8}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image9" src={image9} alt={imageAlt9} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date9">{date9}</time><h3 data-cms="onsverhaal.tijdlijn.title9">{title9}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image10" src={image10} alt={imageAlt10} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date10">{date10}</time><h3 data-cms="onsverhaal.tijdlijn.title10">{title10}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image11" src={image11} alt={imageAlt11} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date11">{date11}</time><h3 data-cms="onsverhaal.tijdlijn.title11">{title11}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image12" src={image12} alt={imageAlt12} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date12">{date12}</time><h3 data-cms="onsverhaal.tijdlijn.title12">{title12}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image13" src={image13} alt={imageAlt13} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date13">{date13}</time><h3 data-cms="onsverhaal.tijdlijn.title13">{title13}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image14" src={image14} alt={imageAlt14} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date14">{date14}</time><h3 data-cms="onsverhaal.tijdlijn.title14">{title14}</h3></li>
+      <li><div class="media"><img data-cms="onsverhaal.tijdlijn.image15" src={image15} alt={imageAlt15} width="480" height="320" loading="lazy"></div><span class="dot" aria-hidden="true"></span><time data-cms="onsverhaal.tijdlijn.date15">{date15}</time><h3 data-cms="onsverhaal.tijdlijn.title15">{title15}</h3></li>
+    </ol>
+  </div>
+</section>

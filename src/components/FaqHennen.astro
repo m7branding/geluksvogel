@@ -1,0 +1,59 @@
+---
+import homepage from "../data/veelgesteldevragen.json";
+
+interface Props {
+  /** Titel. GeluksVogel hennen */
+  headline?: string;
+  /** Vraag. Waar komt de naam GeluksVogel vandaan? */
+  question?: string;
+  /** Antwoord. De naam GeluksVogel is bedacht omdat er meerdere GeluksVogels zijn: 1. De boer omdat hij/zij op deze */
+  answer?: string;
+  /** Vraag 2. Waar kan ik de eieren van GeluksVogel kopen? */
+  question2?: string;
+  /** Antwoord 2. De eieren van GeluksVogel zijn bij iedere natuurvoedingswinkel in Nederland verkrijgbaar. Heeft de w */
+  answer2?: string;
+  /** Vraag 3. Wat eten jullie hennen? */
+  question3?: string;
+  /** Antwoord 3. Onze kippen lopen elke dag buiten en krijgen, omdat ze in mobiele kippenkarren wonen, elke week een  */
+  answer3?: string;
+  /** Vraag 4. Hoe lang mogen de hennen blijven? */
+  question4?: string;
+  /** Antwoord 4. De kippen blijven bij ons totdat de eierproductie af gaat nemen en het voor ons financieel niet meer */
+  answer4?: string;
+  /** Vraag 5. Wat is ophokplicht? */
+  question5?: string;
+  /** Antwoord 5. Als er in Nederland Vogelgriep heerst mogen de kippen helaas niet naar buiten. Als kippenboer ben je */
+  answer5?: string;
+}
+
+const {
+  headline = homepage.hennen.headline,
+  question = homepage.hennen.question,
+  answer = homepage.hennen.answer,
+  question2 = homepage.hennen.question2,
+  answer2 = homepage.hennen.answer2,
+  question3 = homepage.hennen.question3,
+  answer3 = homepage.hennen.answer3,
+  question4 = homepage.hennen.question4,
+  answer4 = homepage.hennen.answer4,
+  question5 = homepage.hennen.question5,
+  answer5 = homepage.hennen.answer5,
+} = Astro.props;
+
+---
+<section class="section faq-group">
+  <div class="wrap">
+    <h2 data-cms="veelgesteldevragen.hennen.headline">{headline}</h2>
+    <div class="faq">
+      <div>
+        <details class="reveal"><summary data-cms="veelgesteldevragen.hennen.question">{question}</summary><div data-cms="veelgesteldevragen.hennen.answer" class="answer">{answer}</div></details>
+        <details class="reveal"><summary data-cms="veelgesteldevragen.hennen.question2">{question2}</summary><div data-cms="veelgesteldevragen.hennen.answer2" class="answer">{answer2}</div></details>
+        <details class="reveal"><summary data-cms="veelgesteldevragen.hennen.question3">{question3}</summary><div data-cms="veelgesteldevragen.hennen.answer3" class="answer">{answer3}</div></details>
+      </div>
+      <div>
+        <details class="reveal"><summary data-cms="veelgesteldevragen.hennen.question4">{question4}</summary><div data-cms="veelgesteldevragen.hennen.answer4" class="answer">{answer4}</div></details>
+        <details class="reveal"><summary data-cms="veelgesteldevragen.hennen.question5">{question5}</summary><div data-cms="veelgesteldevragen.hennen.answer5" class="answer">{answer5}</div></details>
+      </div>
+    </div>
+  </div>
+</section>

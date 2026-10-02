@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import EntryArticle from "../components/EntryArticle.astro";
+import EntryMore from "../components/EntryMore.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { entrySchema } from "../lib/schema";
+
+// Recipes and stories live at the root, exactly where WordPress had them.
+export async function getStaticPaths() {
+  const entries = [...(await getCollection("recepten")), ...(await getCollection("verhalen"))];
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<"recepten"> | CollectionEntry<"verhalen">;
+}
+
+const { entry } = Astro.props;
+const path = `/${entry.id}/`;
+const schema = entrySchema(entry, Astro.site!);
+---
+
+<BaseLayout page={entry.collection} title={entry.data.title} description={entry.data.description} image={entry.data.image} path={path} schema={schema}>
+  <EntryArticle entry={entry} />
+  <EntryMore entry={entry} />
+</BaseLayout>

@@ -1,0 +1,42 @@
+---
+import homepage from "../data/niet-gevonden.json";
+
+interface Props {
+  /** Bovenkop. 404 */
+  eyebrow?: string;
+  /** Titel. Deze pagina is gevlogen */
+  headline?: string;
+  /** Tekst. De pagina die je zoekt bestaat niet (meer). Misschien vind je wat je zoekt via het menu, of begin op */
+  paragraph?: string;
+  /** Knoptekst. Naar de homepage */
+  buttonLabel?: string;
+  /** Link. / */
+  href?: string;
+  /** Linktekst. Bekijk de recepten */
+  linkLabel?: string;
+  /** Link 2. /recepten/ */
+  href2?: string;
+}
+
+const {
+  eyebrow = homepage.melding.eyebrow,
+  headline = homepage.melding.headline,
+  paragraph = homepage.melding.paragraph,
+  buttonLabel = homepage.melding.buttonLabel,
+  href = homepage.melding.href,
+  linkLabel = homepage.melding.linkLabel,
+  href2 = homepage.melding.href2,
+} = Astro.props;
+
+---
+<section class="section not-found">
+  <div class="wrap narrow">
+    <p data-cms="niet-gevonden.melding.eyebrow" class="eyebrow">{eyebrow}</p>
+    <h1 data-cms="niet-gevonden.melding.headline">{headline}</h1>
+    <p data-cms="niet-gevonden.melding.paragraph" class="lead">{paragraph}</p>
+    <div class="actions">
+      <a data-cms="niet-gevonden.melding.buttonLabel" class="btn" href={href}>{buttonLabel}</a>
+      <a class="text-link" href={href2}><span data-cms="niet-gevonden.melding.linkLabel">{linkLabel}</span> <svg class="arrow" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 7h50M44 1l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,26 @@
+---
+import homepage from "../data/recepten.json";
+import { getCollection } from "astro:content";
+
+interface Props {
+  /** Bovenkop. Recepten */
+  eyebrow?: string;
+  /** Toegankelijk label. Alle recepten */
+  ariaLabel?: string;
+}
+
+const {
+  eyebrow = homepage.overzicht.eyebrow,
+  ariaLabel = homepage.overzicht.ariaLabel,
+} = Astro.props;
+const recipes = (await getCollection("recepten")).sort((a, b) => b.data.order - a.data.order);
+---
+<section class="section">
+  <div class="wrap">
+    <ul class="cards cols-3" aria-label={ariaLabel}>
+      {recipes.map((recipe) => (
+        <li class="reveal"><a class="card" href={`/${recipe.id}/`}><div class="media"><img src={recipe.data.image} alt={recipe.data.imageAlt} width="684" height="1024" loading="lazy"></div><span data-cms="recepten.overzicht.eyebrow" class="cat">{eyebrow}</span><h3>{recipe.data.title}</h3></a></li>
+      ))}
+    </ul>
+  </div>
+</section>

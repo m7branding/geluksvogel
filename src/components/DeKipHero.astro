@@ -1,0 +1,22 @@
+---
+import homepage from "../data/de-kip.json";
+
+interface Props {
+  /** Bovenkop. Hennen én hanen */
+  eyebrow?: string;
+  /** Titel. De kip */
+  headline?: string;
+}
+
+const {
+  eyebrow = homepage.hero.eyebrow,
+  headline = homepage.hero.headline,
+} = Astro.props;
+
+---
+<section class="page-hero">
+  <div class="wrap">
+    <p data-cms="de-kip.hero.eyebrow" class="eyebrow">{eyebrow}</p>
+    <h1 data-cms="de-kip.hero.headline">{headline}</h1>
+  </div>
+</section>

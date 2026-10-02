@@ -21,6 +21,7 @@
     "cms:sync": "node scripts/cms-sync.mjs",
     "cms:sync:watch": "node scripts/cms-sync.mjs --watch",
     "cms:anchors": "node scripts/cms-anchors.mjs",
+    "cms:config": "node scripts/cms-config.mjs",
     "test:cms-sync": "node --test scripts/cms-sync.test.mjs scripts/cms-sync-integration.test.mjs",
     "test": "node --test scripts/*.test.mjs",
     "test:site": "node scripts/check-site.mjs"

@@ -1,0 +1,78 @@
+---
+import '../styles/geluksvogel.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import site from '../data/site.json';
+
+interface Props {
+  /** Naam van het inhoudsbestand voor deze pagina. */
+  page?: string;
+  /** Titel voor een recept of verhaal; pagina's halen hun titel uit hun inhoudsbestand. */
+  title?: string;
+  /** Omschrijving voor zoekmachines bij een recept of verhaal. */
+  description?: string;
+  /** Afbeelding voor delen op sociale media. */
+  image?: string;
+  /** Adres van de pagina als dat niet uit de bestandsnaam volgt. */
+  path?: string;
+  /** Gestructureerde gegevens (schema.org) voor zoekmachines. */
+  schema?: Record<string, unknown>;
+  /** Houd deze pagina uit zoekresultaten. */
+  noindex?: boolean;
+}
+
+const { page = 'homepage', title: entryTitle, description: entryDescription, image, path, schema, noindex = false } = Astro.props;
+const files = import.meta.glob<{ default: { meta: { title: string; description: string; nav: string } } }>('../data/*.json', { eager: true });
+const content = files[`../data/${page}.json`]?.default;
+if (!content?.meta) throw new Error(`Missing page content: ${page}`);
+const title = entryTitle ? `${entryTitle} | GeluksVogel` : content.meta.title;
+const description = entryDescription ?? content.meta.description;
+const nav = content.meta.nav;
+const address = path ?? (page === 'homepage' ? '/' : `/${page}/`);
+const canonical = new URL(address, Astro.site).href;
+const shareImage = new URL(image ?? '/assets/img/home/kippenkar-weide.jpg', Astro.site).href;
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'GeluksVogel',
+  url: new URL('/', Astro.site).href,
+  logo: new URL('/assets/brand/logo.svg', Astro.site).href,
+  email: 'info@geluksvogel.bio',
+  sameAs: [site.footer.instagramHref],
+};
+const structured = schema ?? (page === 'homepage' ? organization : null);
+---
+
+<!doctype html>
+<html lang="nl" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={schema ? 'article' : 'website'} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={shareImage} />
+    <meta property="og:locale" content="nl_NL" />
+    <meta property="og:site_name" content="GeluksVogel" />
+    <meta name="theme-color" content="#3b6939" />
+    {!noindex && <link rel="canonical" href={canonical} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/assets/fonts/nunito-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/nunito-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    {structured && <script is:inline type="application/ld+json" set:html={JSON.stringify(structured).replace(/</g, '\\u003c')} />}
+    <script is:inline>document.documentElement.classList.remove('no-js');</script>
+  </head>
+  <body>
+    <SiteHeader activeNav={nav} currentPath={address} />
+    <main id="main"><slot /></main>
+    <SiteFooter />
+    <script is:inline id="form-messages" type="application/json" set:html={JSON.stringify(site.forms).replace(/</g, '\\u003c')} />
+    <script is:inline src="/assets/js/geluksvogel.js" defer></script>
+  </body>
+</html>

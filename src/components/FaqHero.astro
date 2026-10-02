@@ -1,0 +1,22 @@
+---
+import homepage from "../data/veelgesteldevragen.json";
+
+interface Props {
+  /** Bovenkop. FAQ */
+  eyebrow?: string;
+  /** Titel. Veelgestelde vragen */
+  headline?: string;
+}
+
+const {
+  eyebrow = homepage.hero.eyebrow,
+  headline = homepage.hero.headline,
+} = Astro.props;
+
+---
+<section class="page-hero">
+  <div class="wrap">
+    <p data-cms="veelgesteldevragen.hero.eyebrow" class="eyebrow">{eyebrow}</p>
+    <h1 data-cms="veelgesteldevragen.hero.headline">{headline}</h1>
+  </div>
+</section>

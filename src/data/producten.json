@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "title": "Producten – Bij GeluksVogel kunt u naast eieren ook vlees kopen | GeluksVogel",
+    "description": "Onze producten bestaan uit de GeluksVogel eieren en daarnaast het vlees van GeluksVogels, verwerkt tot biologische hanensoep.",
+    "nav": "producten"
+  },
+  "hero": {
+    "eyebrow": "Eieren & vlees",
+    "headline": "Producten"
+  },
+  "eieren": {
+    "headline": "GeluksVogel eieren",
+    "image": "/assets/img/producten/eierdoosje.jpg",
+    "imageAlt": "Een GeluksVogel eierdoosje met 4 biologische eieren van rondtrekkende kippen",
+    "subheading": "Het eierdoosje",
+    "paragraph": "Onze GeluksVogel eieren worden met liefde en zorg handmatig uit de legnesten gehaald, gestempeld en verpakt.",
+    "paragraph2": "Het materiaal van het eierdoosje bestaat uit 50% hergebruikt papier en 50% bermgras. Het gras wordt toegevoegd waardoor er minder papier nodig is voor de verpakking. Én onze doosjes zijn de enige in Nederland waar statiegeld op zit!",
+    "image2": "/assets/img/producten/wikkel.jpg",
+    "imageAlt2": "Een GeluksVogel eierdoosje met wikkel tussen de narcissen",
+    "subheading2": "De wikkel",
+    "paragraph3": "We hebben de wikkel zo ontworpen dat ook dit onderdeel van onze verpakking herbruikbaar is: Hij kan gebruikt worden als ansichtkaart.",
+    "paragraph4": "Stuur iemand een kaartje en verspreid het geluk!"
+  },
+  "vlees": {
+    "headline": "Vleesproducten",
+    "image": "/assets/img/producten/hanensoep.png",
+    "imageAlt": "Een pot biologische GeluksVogel hanensoep",
+    "subheading": "Hanensoep",
+    "paragraph": "Het vlees van deze hanen is uniek van smaak omdat ze langzaam zijn gegroeid, veel beweging hebben gehad en naast vers gras ook biologisch voer hebben gegeten. Omdat we staan voor het principe om zo weinig mogelijk te verspillen kiezen we voor de verwerking van al het vlees tot hanensoep, een exclusief product wat een enorm lange houdbaarheid heeft.",
+    "paragraph2": "Hanensoep is in de natuurvoedingswinkel in conservenpotten verkrijgbaar. Deze (h)eerlijk smakende pot met soep is geschikt voor 2 personen. Klaar voor gebruik, je hoeft hem alleen nog op te warmen. Als voorgerecht, hoofdgerecht of als lekkere snack tussendoor.",
+    "image2": "/assets/img/producten/man-in-de-pan.jpg",
+    "imageAlt2": "Een gele pan van Man in de Pan",
+    "subheading2": "Man in de pan",
+    "paragraph3": "Geluksvogel is nauw betrokken bij Man in de Pan, een landelijk initiatief ter promotie van het biologische mannenvlees.",
+    "paragraph4": "Je kunt hier meer over lezen op de website",
+    "linkLabel": "manindepan.nl",
+    "href": "https://manindepan.nl/"
+  }
+}

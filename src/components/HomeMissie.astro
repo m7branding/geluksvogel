@@ -1,0 +1,29 @@
+---
+import homepage from "../data/homepage.json";
+
+interface Props {
+  /** Bovenkop. GeluksVogel */
+  eyebrow?: string;
+  /** Titel. (H)eerlijke biologische producten */
+  headline?: string;
+  /** Titel 2. van kippen, die onder de meest natuurlijke omstandigheden wonen, en dat proef je! */
+  headline2?: string;
+  /** Toelichting. Sinds 2018 */
+  note?: string;
+}
+
+const {
+  eyebrow = homepage.missie.eyebrow,
+  headline = homepage.missie.headline,
+  headline2 = homepage.missie.headline2,
+  note = homepage.missie.note,
+} = Astro.props;
+
+---
+<section class="section bg-caramel statement">
+  <div class="wrap reveal">
+    <p data-cms="homepage.missie.eyebrow" class="eyebrow">{eyebrow}</p>
+    <h2><span data-cms="homepage.missie.headline">{headline}</span> <span data-cms="homepage.missie.headline2">{headline2}</span></h2>
+    <p data-cms="homepage.missie.note" class="note">{note}</p>
+  </div>
+</section>

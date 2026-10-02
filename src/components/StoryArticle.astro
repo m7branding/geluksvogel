@@ -1,0 +1,48 @@
+---
+import homepage from "../data/verhalen.json";
+import { render, type CollectionEntry } from "astro:content";
+import { formatDate } from "../lib/format";
+
+interface Props {
+  /** Het verhaal. */
+  entry: CollectionEntry<"verhalen">;
+  /** Tekst delen. Deel dit verhaal */
+  shareLabel?: string;
+  /** Linktekst. Alle verhalen */
+  linkLabel?: string;
+  /** Link. /verhalen/ */
+  href?: string;
+}
+
+const {
+  shareLabel = homepage.detail.shareLabel,
+  linkLabel = homepage.detail.linkLabel,
+  href = homepage.detail.href,
+  entry,
+} = Astro.props;
+const { Content } = await render(entry);
+const url = new URL(`/${entry.id}/`, Astro.site).href;
+---
+<article class="section">
+  <div class="wrap">
+    <header class="story-head">
+      <p class="eyebrow">{entry.data.category}</p>
+      <h1>{entry.data.title}</h1>
+      <p class="meta"><time datetime={entry.data.date.toISOString().slice(0, 10)}>{formatDate(entry.data.date)}</time></p>
+    </header>
+    <figure class="story-cover"><img src={entry.data.image} alt={entry.data.imageAlt} width="1600" height="1067" fetchpriority="high"></figure>
+  </div>
+  <div class="wrap narrow">
+    <div class="story-text prose"><Content /></div>
+    <div class="gallery">
+      {entry.data.gallery.map((photo) => <figure class="reveal"><img src={photo.image} alt={photo.alt} width="1600" height="1067" loading="lazy"></figure>)}
+    </div>
+    <div class="share">
+      <strong data-cms="verhalen.detail.shareLabel">{shareLabel}</strong>
+      <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`} rel="noopener" target="_blank">Facebook</a>
+      <a href={`https://wa.me/?text=${encodeURIComponent(`${entry.data.title} ${url}`)}`} rel="noopener" target="_blank">WhatsApp</a>
+      <a href={`mailto:?subject=${encodeURIComponent(entry.data.title)}&body=${encodeURIComponent(url)}`}>E-mail</a>
+    </div>
+    <p class="back-link"><a class="text-link" href={href}><svg class="arrow" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M52 7H2M8 1 2 7l6 6"/></svg> <span data-cms="verhalen.detail.linkLabel">{linkLabel}</span></a></p>
+  </div>
+</article>

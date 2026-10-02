@@ -1,0 +1,22 @@
+---
+import homepage from "../data/producten.json";
+
+interface Props {
+  /** Bovenkop. Eieren & vlees */
+  eyebrow?: string;
+  /** Titel. Producten */
+  headline?: string;
+}
+
+const {
+  eyebrow = homepage.hero.eyebrow,
+  headline = homepage.hero.headline,
+} = Astro.props;
+
+---
+<section class="page-hero">
+  <div class="wrap">
+    <p data-cms="producten.hero.eyebrow" class="eyebrow">{eyebrow}</p>
+    <h1 data-cms="producten.hero.headline">{headline}</h1>
+  </div>
+</section>

@@ -1,0 +1,58 @@
+---
+import homepage from "../data/onsverhaal.json";
+
+interface Props {
+  /** Afbeelding. /assets/img/home/yvonne.jpg */
+  image?: string;
+  /** Alt-tekst. Yvonne, oprichter van GeluksVogel */
+  imageAlt?: string;
+  /** Tekst. Zoeken naar een optimale vorm van kippenhouderij waarbij zowel de kip als de boer(in) zich als Geluk */
+  paragraph?: string;
+  /** Tekst 2. Omdat de groothandel ook aangaf op zoek te zijn naar een ei met een transparant en compleet verhaal, */
+  paragraph2?: string;
+  /** Tekst 3. In 2018 was de eerste mobiele kippenkar een feit en werd deze enthousiast en trots gepresenteerd op  */
+  paragraph3?: string;
+  /** Tekst 4. GeluksVogel is uiteindelijk gegroeid tot een groep van biologische boeren die kippen als nevenactivi */
+  paragraph4?: string;
+  /** Tekst 5. Elke boer heeft 249 kippen (244 hennen en 5 hanen) die in een mobiele kippenkar wonen. */
+  paragraph5?: string;
+  /** Tekst 6. Daarnaast pakt GeluksVogel haar verantwoording voor de hanen, want voor elke hen die bij ons woont m */
+  paragraph6?: string;
+  /** Tekst 7. De hanen wonen in een mobiele hanenkar, met 249 mannen bij elkaar. Omdat dit het broertje van de leg */
+  paragraph7?: string;
+  /** Afsluiting. Bedankt voor je interesse in ons prachtige concept, */
+  signoff?: string;
+  /** Afsluiting 2. Het GeluksVogel team */
+  signoff2?: string;
+}
+
+const {
+  image = homepage.intro.image,
+  imageAlt = homepage.intro.imageAlt,
+  paragraph = homepage.intro.paragraph,
+  paragraph2 = homepage.intro.paragraph2,
+  paragraph3 = homepage.intro.paragraph3,
+  paragraph4 = homepage.intro.paragraph4,
+  paragraph5 = homepage.intro.paragraph5,
+  paragraph6 = homepage.intro.paragraph6,
+  paragraph7 = homepage.intro.paragraph7,
+  signoff = homepage.intro.signoff,
+  signoff2 = homepage.intro.signoff2,
+} = Astro.props;
+
+---
+<section class="section">
+  <div class="wrap split top">
+    <figure class="split-media portrait reveal"><img data-cms="onsverhaal.intro.image" src={image} alt={imageAlt} width="1067" height="1600" loading="lazy"></figure>
+    <div class="prose reveal">
+      <p data-cms="onsverhaal.intro.paragraph">{paragraph}</p>
+      <p data-cms="onsverhaal.intro.paragraph2">{paragraph2}</p>
+      <p data-cms="onsverhaal.intro.paragraph3">{paragraph3}</p>
+      <p data-cms="onsverhaal.intro.paragraph4">{paragraph4}</p>
+      <p data-cms="onsverhaal.intro.paragraph5">{paragraph5}</p>
+      <p data-cms="onsverhaal.intro.paragraph6">{paragraph6}</p>
+      <p data-cms="onsverhaal.intro.paragraph7">{paragraph7}</p>
+      <p data-cms="onsverhaal.intro.signoff" class="signoff">{signoff}<span data-cms="onsverhaal.intro.signoff2">{signoff2}</span></p>
+    </div>
+  </div>
+</section>

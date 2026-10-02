@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "title": "De hen | GeluksVogel",
+    "description": "Als een kip 17-18 weken oud is komt ze bij GeluksVogel wonen. Na een paar weken gewenning en ontwikkeling begint van nature de leg van de eieren.",
+    "nav": "de-kip"
+  },
+  "levensloop": {
+    "eyebrow": "De kip",
+    "headline": "De hen",
+    "image": "/assets/img/home/de-hen.jpg",
+    "imageAlt": "Een bruine GeluksVogel hen tussen de andere hennen",
+    "week": "Week 0",
+    "text": "geboren bij de boerderij",
+    "week2": "Week 17-18",
+    "text2": "als jonge hennen naar GeluksVogel",
+    "week3": "Week 20-22",
+    "text3": "de eerste henneneitjes",
+    "week4": "Week 24-26",
+    "text4": "gewone formaat eieren",
+    "week5": "Week 26-80",
+    "text5": "een lui kippenleven",
+    "week6": "Week 80-82",
+    "text6": "naar de slacht"
+  },
+  "verhaal": {
+    "subheading": "Van ei tot jonge hen",
+    "paragraph": "Onze hennen worden geboren bij een boer die heel veel kennis heeft van de groei van kuiken tot jonge hen. Zo een bedrijf heet ‘broederij’. De eerste weken van het leven van de hen bepalen voor een groot deel hoe goed ze groeit, hoe sterk ze wordt, hoe goed ze eet en hoe lang ze eieren van goede kwaliteit blijft leggen. Dit is dus echt aan vakmensen om dit te doen. GeluksVogel kiest ervoor om hennen aan te schaffen waarvan beide ouders ook biologisch grootgebracht zijn. Ze krijgen daar, afhankelijk van hun leeftijd, verschillende soorten biologisch voer waardoor ze optimaal groeien. Net voordat de hennen gaan leggen vertrekken ze naar de mobiele kippenkar.",
+    "subheading2": "Van jonge hen tot legkip",
+    "paragraph2": "Als een kip 17-18 weken oud is komt ze bij GeluksVogel wonen. Na een paar weken gewenning en ontwikkeling begint van nature de leg van de eieren. Vanaf dan krijgen de hennen naast het onbeperkt eten van gras als aanvulling legkorrels te eten. Dit voer zorgt voor verdere ontwikkeling van haarzelf en de opstart van het vormen van eieren.",
+    "subheading3": "Henneneitjes",
+    "paragraph3": "Op de leeftijd van 20-22 weken leggen ze hun eerste eieren. Deze eitjes zijn klein van stuk en stevig van structuur. De benaming voor deze eieren zijn henneneitjes. Ze hebben in verhouding meer dooier en ook stevig eiwit.",
+    "paragraph4": "Henneneitjes worden vanwege de smaak de kaviaar van de kip genoemd; de intense smaakbeleving is een delicatesse voor fijnproevers. Pas na een paar weken worden de eieren van een normaal, volwassen formaat.",
+    "paragraph5": "Als de kwaliteit van de eieren minder wordt en de hennen op leeftijd raken, rond de 80-82 weken, gaan de hennen naar de slacht. We vangen ze ’s morgens in alle vroegte, één voor één met de hand. Onder controle van een dierenarts worden ze zo diervriendelijk mogelijk geslacht.",
+    "linkLabel": "Lees ook over de haan",
+    "href": "/de-haan/"
+  }
+}

@@ -1,0 +1,44 @@
+---
+import homepage from "../data/homepage.json";
+
+interface Props {
+  /** Getal. 8 */
+  number?: string;
+  /** Omschrijving. GeluksVogel boeren */
+  label?: string;
+  /** Getal 2. 45.000 */
+  number2?: string;
+  /** Omschrijving 2. eierdoosjes retour */
+  label2?: string;
+  /** Getal 3. 5 */
+  number3?: string;
+  /** Omschrijving 3. hanen in iedere kippenkar */
+  label3?: string;
+  /** Getal 4. 2 */
+  number4?: string;
+  /** Omschrijving 4. keer per week feest in het inpakstation */
+  label4?: string;
+}
+
+const {
+  number = homepage.kerncijfers.number,
+  label = homepage.kerncijfers.label,
+  number2 = homepage.kerncijfers.number2,
+  label2 = homepage.kerncijfers.label2,
+  number3 = homepage.kerncijfers.number3,
+  label3 = homepage.kerncijfers.label3,
+  number4 = homepage.kerncijfers.number4,
+  label4 = homepage.kerncijfers.label4,
+} = Astro.props;
+
+---
+<section class="section bg-cream">
+  <div class="wrap">
+    <div class="figures">
+      <div class="figure reveal"><strong data-cms="homepage.kerncijfers.number" data-count>{number}</strong><span data-cms="homepage.kerncijfers.label">{label}</span></div>
+      <div class="figure reveal"><strong data-cms="homepage.kerncijfers.number2" data-count>{number2}</strong><span data-cms="homepage.kerncijfers.label2">{label2}</span></div>
+      <div class="figure reveal"><strong data-cms="homepage.kerncijfers.number3" data-count>{number3}</strong><span data-cms="homepage.kerncijfers.label3">{label3}</span></div>
+      <div class="figure reveal"><strong data-cms="homepage.kerncijfers.number4" data-count>{number4}</strong><span data-cms="homepage.kerncijfers.label4">{label4}</span></div>
+    </div>
+  </div>
+</section>

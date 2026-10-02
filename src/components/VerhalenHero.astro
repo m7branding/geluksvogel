@@ -1,0 +1,26 @@
+---
+import homepage from "../data/verhalen.json";
+
+interface Props {
+  /** Bovenkop. Nieuws */
+  eyebrow?: string;
+  /** Titel. Verhalen */
+  headline?: string;
+  /** Inleiding. Nieuws en verhalen uit onze mobiele kippenkarren. */
+  lead?: string;
+}
+
+const {
+  eyebrow = homepage.hero.eyebrow,
+  headline = homepage.hero.headline,
+  lead = homepage.hero.lead,
+} = Astro.props;
+
+---
+<section class="page-hero">
+  <div class="wrap">
+    <p data-cms="verhalen.hero.eyebrow" class="eyebrow">{eyebrow}</p>
+    <h1 data-cms="verhalen.hero.headline">{headline}</h1>
+    <p data-cms="verhalen.hero.lead" class="lead">{lead}</p>
+  </div>
+</section>

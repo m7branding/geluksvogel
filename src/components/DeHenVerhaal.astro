@@ -1,0 +1,55 @@
+---
+import homepage from "../data/de-hen.json";
+
+interface Props {
+  /** Subtitel. Van ei tot jonge hen */
+  subheading?: string;
+  /** Tekst. Onze hennen worden geboren bij een boer die heel veel kennis heeft van de groei van kuiken tot jonge */
+  paragraph?: string;
+  /** Subtitel 2. Van jonge hen tot legkip */
+  subheading2?: string;
+  /** Tekst 2. Als een kip 17-18 weken oud is komt ze bij GeluksVogel wonen. Na een paar weken gewenning en ontwikk */
+  paragraph2?: string;
+  /** Subtitel 3. Henneneitjes */
+  subheading3?: string;
+  /** Tekst 3. Op de leeftijd van 20-22 weken leggen ze hun eerste eieren. Deze eitjes zijn klein van stuk en stevi */
+  paragraph3?: string;
+  /** Tekst 4. Henneneitjes worden vanwege de smaak de kaviaar van de kip genoemd; de intense smaakbeleving is een  */
+  paragraph4?: string;
+  /** Tekst 5. Als de kwaliteit van de eieren minder wordt en de hennen op leeftijd raken, rond de 80-82 weken, gaa */
+  paragraph5?: string;
+  /** Linktekst. Lees ook over de haan */
+  linkLabel?: string;
+  /** Link. /de-haan/ */
+  href?: string;
+}
+
+const {
+  subheading = homepage.verhaal.subheading,
+  paragraph = homepage.verhaal.paragraph,
+  subheading2 = homepage.verhaal.subheading2,
+  paragraph2 = homepage.verhaal.paragraph2,
+  subheading3 = homepage.verhaal.subheading3,
+  paragraph3 = homepage.verhaal.paragraph3,
+  paragraph4 = homepage.verhaal.paragraph4,
+  paragraph5 = homepage.verhaal.paragraph5,
+  linkLabel = homepage.verhaal.linkLabel,
+  href = homepage.verhaal.href,
+} = Astro.props;
+
+---
+<section class="section bg-cream">
+  <div class="wrap">
+    <div class="columns-2 reveal">
+      <h3 data-cms="de-hen.verhaal.subheading">{subheading}</h3>
+      <p data-cms="de-hen.verhaal.paragraph">{paragraph}</p>
+      <h3 data-cms="de-hen.verhaal.subheading2">{subheading2}</h3>
+      <p data-cms="de-hen.verhaal.paragraph2">{paragraph2}</p>
+      <h3 data-cms="de-hen.verhaal.subheading3">{subheading3}</h3>
+      <p data-cms="de-hen.verhaal.paragraph3">{paragraph3}</p>
+      <p data-cms="de-hen.verhaal.paragraph4">{paragraph4}</p>
+      <p data-cms="de-hen.verhaal.paragraph5">{paragraph5}</p>
+    </div>
+    <p class="back-link"><a class="text-link" href={href}><span data-cms="de-hen.verhaal.linkLabel">{linkLabel}</span> <svg class="arrow" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 7h50M44 1l6 6-6 6"/></svg></a></p>
+  </div>
+</section>

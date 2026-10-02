@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "title": "Verhalen uit de kippenkar | GeluksVogel",
+    "description": "Nieuws en verhalen van GeluksVogel: over het leven in onze mobiele kippenkar, onze verkooppunten en bijzondere bezoekers.",
+    "nav": "verhalen"
+  },
+  "hero": {
+    "eyebrow": "Nieuws",
+    "headline": "Verhalen",
+    "lead": "Nieuws en verhalen uit onze mobiele kippenkarren."
+  },
+  "overzicht": {
+    "ariaLabel": "Alle verhalen",
+    "linkLabel": "Lees verder"
+  },
+  "detail": {
+    "shareLabel": "Deel dit verhaal",
+    "moreHeadline": "Meer verhalen",
+    "linkLabel": "Alle verhalen",
+    "href": "/verhalen/"
+  }
+}

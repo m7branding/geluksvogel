@@ -1,0 +1,34 @@
+---
+import homepage from "../data/homepage.json";
+import { getCollection } from "astro:content";
+
+interface Props {
+  /** Titel. Recepten */
+  headline?: string;
+  /** Bovenkop. Recepten */
+  eyebrow?: string;
+  /** Linktekst. Alle recepten */
+  linkLabel?: string;
+  /** Link. /recepten/ */
+  href?: string;
+}
+
+const {
+  headline = homepage.recepten.headline,
+  eyebrow = homepage.recepten.eyebrow,
+  linkLabel = homepage.recepten.linkLabel,
+  href = homepage.recepten.href,
+} = Astro.props;
+const recipes = (await getCollection("recepten")).sort((a, b) => b.data.order - a.data.order).slice(0, 4);
+---
+<section class="section">
+  <div class="wrap">
+    <div class="section-head center"><h2 data-cms="homepage.recepten.headline" class="section-title">{headline}</h2></div>
+    <ul class="cards">
+      {recipes.map((recipe) => (
+        <li class="reveal"><a class="card" href={`/${recipe.id}/`}><div class="media"><img src={recipe.data.image} alt={recipe.data.imageAlt} width="684" height="1024" loading="lazy"></div><span data-cms="homepage.recepten.eyebrow" class="cat">{eyebrow}</span><h3>{recipe.data.title}</h3></a></li>
+      ))}
+    </ul>
+    <p class="products-foot"><a class="text-link" href={href}><span data-cms="homepage.recepten.linkLabel">{linkLabel}</span> <svg class="arrow" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 7h50M44 1l6 6-6 6"/></svg></a></p>
+  </div>
+</section>

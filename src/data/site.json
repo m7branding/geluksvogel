@@ -5,6 +5,7 @@
     "href": "/",
     "image": "/assets/brand/logo.svg",
     "imageAlt": "GeluksVogel.bio",
+    "image2": "/assets/brand/logo-white.svg",
     "navLabel": "Hoofdmenu",
     "linkLabel": "Home",
     "href2": "/",
@@ -57,7 +58,6 @@
   },
   "forms": {
     "defaultSubject": "Bericht via geluksvogel.bio",
-    "copied": "Gekopieerd",
-    "copyMessage": "Kopieer bericht"
+    "copied": "Gekopieerd"
   }
 }

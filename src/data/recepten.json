@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "title": "Recepten | GeluksVogel",
+    "description": "Heerlijke ei-recepten met liefde samengesteld om je te inspireren op verschillende manieren te genieten van onze GeluksVogel eieren.",
+    "nav": "recepten"
+  },
+  "hero": {
+    "eyebrow": "Koken met gelukseieren",
+    "headline": "Recepten",
+    "lead": "Heerlijke ei-recepten met liefde samengesteld om je te inspireren op verschillende manieren te genieten van onze GeluksVogel eieren."
+  },
+  "overzicht": {
+    "eyebrow": "Recepten",
+    "ariaLabel": "Alle recepten"
+  },
+  "detail": {
+    "eyebrow": "Recepten",
+    "ingredientsLabel": "Ingrediënten",
+    "stepsLabel": "Bereidingswijze",
+    "moreHeadline": "Meer GeluksVogel recepten",
+    "linkLabel": "Alle recepten",
+    "href": "/recepten/"
+  }
+}
