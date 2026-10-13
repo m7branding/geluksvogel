@@ -31,41 +31,100 @@ standaardbestanden van Vimexx (`index.html`, `logo.png`). Zet daarna in
 DirectAdmin bij **SSL-certificaten** Let's Encrypt aan en, zodra dat werkt,
 **Forceer SSL**.
 
-## Volgorde (automatisch publiceren via GitHub)
+## Automatisch publiceren via GitHub
 
-1. **Hosting kiezen.** Het deployscript accepteert alleen een Vimexx-host
-   (`web<nummer>.zxcs.nl`), een gebruiker als `u12345p67890` en de documentroot
-   `/domains/geluksvogel.bio/public_html` (of dezelfde map onder
-   `/home/<gebruiker>`). Releases en back-ups komen in
-   `/domains/geluksvogel.bio/geluksvogel-deploy`, buiten `public_html`. Komt de
-   site elders, pas dan de controles in `scripts/deploy-staging.sh` en
-   `scripts/activate-staging.sh` aan.
-2. **Deploysleutel.** Maak een eigen sleutelpaar voor deze site:
-   `ssh-keygen -t ed25519 -C github-actions-geluksvogel`. Zet de publieke sleutel
-   in DirectAdmin onder **SSH Keys**, zet **SSH access** aan en noteer de poort
-   (bij Vimexx meestal `7685`).
-3. **GitHub-instellingen**, onder **Settings → Secrets and variables → Actions**:
+Na deze inrichting staat elke wijziging op `main` (uit Stacki, het CMS of een
+commit) na ongeveer een minuut live. Je hoeft dan geen zip meer te uploaden. De
+deploy publiceert alleen vanaf `main` en alleen als alle instellingen kloppen.
 
-   | Soort | Naam | Waarde |
-   | --- | --- | --- |
-   | Secret | `VIMEXX_SSH_PRIVATE_KEY` | de privésleutel uit stap 2 |
-   | Secret | `VIMEXX_SSH_KNOWN_HOSTS` | uitvoer van `ssh-keyscan -p 7685 web…zxcs.nl` |
-   | Variabele | `VIMEXX_SSH_HOST` | `web…zxcs.nl` |
-   | Variabele | `VIMEXX_SSH_USER` | `u…p…` |
-   | Variabele | `VIMEXX_SSH_PORT` | `7685` |
-   | Variabele | `VIMEXX_WEBROOT` | `/home/<gebruiker>/domains/geluksvogel.bio/public_html` |
-   | Variabele | `VIMEXX_DEPLOY_ENABLED` | `true` zodra alles hierboven klopt |
+### 1. SSH aanzetten in Vimexx
 
-4. **Publiceren.** Merge naar `main`. De deploy bevestigt vanaf de server
-   hoeveel bestanden er staan en toont `deployment.json` met de commit.
-5. **DNS** van `geluksvogel.bio` en `www.geluksvogel.bio` naar het nieuwe pakket
-   laten wijzen, en daarna een **Let's Encrypt-certificaat** uitgeven voor beide
-   namen.
-6. **Doorsturen aanzetten:** zet `VIMEXX_FORCE_HTTPS_REDIRECT` op `true`, maar
-   pas als beide namen over HTTPS werken. Dan stuurt `.htaccess` http naar https
-   en `www.geluksvogel.bio` naar `geluksvogel.bio`.
-7. **Controle.** Na de DNS-verhuizing vergelijkt de workflowstap *Verify public
-   website matches this build* elke pagina op het live adres met de build.
+Open DirectAdmin van het pakket met `geluksvogel.bio` en noteer drie gegevens.
+Ze staan in de welkomstmail van het pakket en in DirectAdmin:
+
+* de server, bijvoorbeeld `web0123.zxcs.nl`;
+* de gebruikersnaam, bijvoorbeeld `u12345p67890`;
+* de SSH-poort, bij Vimexx `7685`.
+
+Zet SSH-toegang aan voor het pakket (DirectAdmin → **SSH Keys** of via Vimexx
+support).
+
+### 2. Een deploysleutel maken (Terminal op je Mac)
+
+```bash
+ssh-keygen -t ed25519 -N "" -C github-actions-geluksvogel -f ~/.ssh/geluksvogel_deploy
+pbcopy < ~/.ssh/geluksvogel_deploy.pub
+```
+
+Het tweede commando zet de **publieke** sleutel op je klembord. Plak die in
+DirectAdmin → **SSH Keys** als één regel, zonder enter erin. Deel de privésleutel
+(het bestand zonder `.pub`) nooit in een chat of mail.
+
+### 3. GitHub-instellingen
+
+Ga in GitHub naar `m7branding/geluksvogel` → **Settings → Secrets and variables →
+Actions**.
+
+Onder **Secrets**:
+
+| Naam | Waarde |
+| --- | --- |
+| `VIMEXX_SSH_PRIVATE_KEY` | `pbcopy < ~/.ssh/geluksvogel_deploy` in Terminal, en dan plakken |
+| `VIMEXX_SSH_KNOWN_HOSTS` | de serversleutel uit stap 4 |
+
+Onder **Variables**:
+
+| Naam | Waarde |
+| --- | --- |
+| `VIMEXX_SSH_HOST` | de server, bijvoorbeeld `web0123.zxcs.nl` |
+| `VIMEXX_SSH_USER` | de gebruikersnaam, bijvoorbeeld `u12345p67890` |
+| `VIMEXX_SSH_PORT` | `7685` |
+| `VIMEXX_WEBROOT` | `/home/<gebruikersnaam>/domains/geluksvogel.bio/public_html` |
+
+### 4. De controleknop
+
+Ga in GitHub naar **Actions → Check GeluksVogel go-live readiness → Run
+workflow**. Zet de eerste keer het vinkje **show_server_key** aan. De run
+uploadt niets. Hij toont een tabel met ✅, ⚠️ en ❌ voor de instellingen, DNS,
+het certificaat en de SSH-toegang.
+
+Met het vinkje aan staat in de log onder *Read the SSH server key* één regel die
+begint met `[web0123.zxcs.nl]:7685 ssh-ed25519`. Zet die regel in het secret
+`VIMEXX_SSH_KNOWN_HOSTS` en draai de controle opnieuw, nu zonder vinkje. Herhaal
+tot er bij SSH een ✅ staat.
+
+### 5. Aanzetten
+
+Zet de variabele `VIMEXX_DEPLOY_ENABLED` op `true`. Vanaf nu publiceert elke
+push naar `main`. Je kunt ook direct publiceren via **Actions → Build and deploy
+GeluksVogel → Run workflow** op `main`.
+
+Bij elke publicatie gebeurt het volgende:
+
+* de deploy bewaart de vorige versie van `public_html` in
+  `domains/geluksvogel.bio/geluksvogel-deploy/backups`;
+* `public_html` wordt daarna gelijk aan de build. Losse bestanden die je er met
+  de hand in zette, verdwijnen dus. Uitzonderingen zijn `.well-known`,
+  `cgi-bin` en oude bestanden in `assets/` en `_astro/`: die blijven staan voor
+  bezoekers die nog een oudere pagina open hebben;
+* de laatste stap vergelijkt elke pagina op het live adres met de build, zodra
+  de DNS naar Vimexx wijst.
+
+### 6. HTTPS-doorverwijzing
+
+Werken `https://geluksvogel.bio` en `https://www.geluksvogel.bio` met een geldig
+certificaat? Zet dan `VIMEXX_FORCE_HTTPS_REDIRECT` op `true`. Daarna stuurt
+`.htaccess` http door naar https, en `www.` naar het kale adres.
+
+### Andere hosting
+
+Het deployscript accepteert alleen een Vimexx-host (`web<nummer>.zxcs.nl`), een
+gebruiker als `u12345p67890` en de documentroot
+`/domains/geluksvogel.bio/public_html` (of dezelfde map onder
+`/home/<gebruiker>`). Releases en back-ups komen in
+`/domains/geluksvogel.bio/geluksvogel-deploy`, buiten `public_html`. Komt de
+site elders, pas dan de controles in `scripts/deploy-staging.sh` en
+`scripts/activate-staging.sh` aan.
 
 ## Wat de server meekrijgt
 

@@ -1,0 +1,296 @@
+name: Check GeluksVogel go-live readiness
+
+on:
+  workflow_dispatch:
+    inputs:
+      show_server_key:
+        description: 'Also print the SSH server key of the host, to fill VIMEXX_SSH_KNOWN_HOSTS after a hosting move'
+        type: boolean
+        default: false
+      server_key_host:
+        description: 'Read the server key of this host instead of the configured one, to prepare a move'
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: geluksvogel-go-live-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      SITE_DOMAIN: geluksvogel.bio
+      HOSTING_DOMAIN: geluksvogel.bio
+      RESULTS: ${{ github.workspace }}/readiness.tsv
+    steps:
+      - name: Check the GitHub deploy and CMS settings
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.VIMEXX_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.VIMEXX_SSH_KNOWN_HOSTS }}
+          DEPLOY_SSH_HOST: ${{ vars.VIMEXX_SSH_HOST }}
+          DEPLOY_SSH_USER: ${{ vars.VIMEXX_SSH_USER }}
+          DEPLOY_SSH_PORT: ${{ vars.VIMEXX_SSH_PORT }}
+          DEPLOY_WEBROOT: ${{ vars.VIMEXX_WEBROOT }}
+          DEPLOY_ENABLED: ${{ vars.VIMEXX_DEPLOY_ENABLED }}
+          SITE_ID: ${{ vars.DECAPBRIDGE_SITE_ID }}
+          FORCE_HTTPS: ${{ vars.VIMEXX_FORCE_HTTPS_REDIRECT }}
+        run: |
+          # GitHub runs this step with bash -e; this script records failures itself.
+          set +e
+          set -uo pipefail
+          : >"$RESULTS"
+          record() { printf '%s\t%s\t%s\n' "$1" "$2" "$3" >>"$RESULTS"; }
+          value() { if [ -n "$2" ]; then record OK "$1" "$2"; else record FAIL "$1" 'missing in Settings -> Actions -> Variables'; fi; }
+          secret() { if [ -n "$2" ]; then record OK "$1" 'present'; else record FAIL "$1" 'missing in Settings -> Actions -> Secrets'; fi; }
+
+          secret VIMEXX_SSH_PRIVATE_KEY "$SSH_PRIVATE_KEY"
+          secret VIMEXX_SSH_KNOWN_HOSTS "$SSH_KNOWN_HOSTS"
+          value VIMEXX_SSH_HOST "$DEPLOY_SSH_HOST"
+          value VIMEXX_SSH_USER "$DEPLOY_SSH_USER"
+          value VIMEXX_SSH_PORT "$DEPLOY_SSH_PORT"
+
+          DEPLOY_WEBROOT=${DEPLOY_WEBROOT%/}
+          case "$DEPLOY_WEBROOT" in
+            "/domains/$HOSTING_DOMAIN/public_html"|"/home/$DEPLOY_SSH_USER/domains/$HOSTING_DOMAIN/public_html")
+              record OK VIMEXX_WEBROOT "$DEPLOY_WEBROOT" ;;
+            '') record FAIL VIMEXX_WEBROOT 'missing in Settings -> Actions -> Variables' ;;
+            *) record FAIL VIMEXX_WEBROOT "outside the GeluksVogel documentroot: $DEPLOY_WEBROOT" ;;
+          esac
+
+          case "$DEPLOY_ENABLED" in
+            true) record OK VIMEXX_DEPLOY_ENABLED 'every push to main publishes' ;;
+            '') record WARN VIMEXX_DEPLOY_ENABLED 'not set, so pushes to main do not upload yet' ;;
+            *) record WARN VIMEXX_DEPLOY_ENABLED "$DEPLOY_ENABLED, so pushes to main do not upload yet" ;;
+          esac
+
+          if [ -z "$SITE_ID" ]; then
+            record WARN DECAPBRIDGE_SITE_ID 'not set, so /admin/ stays a placeholder page'
+          elif printf '%s' "$SITE_ID" | grep -Eiq '^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$'; then
+            record OK DECAPBRIDGE_SITE_ID "$SITE_ID"
+          else
+            record FAIL DECAPBRIDGE_SITE_ID 'not a DecapBridge site UUID'
+          fi
+
+          record INFO VIMEXX_FORCE_HTTPS_REDIRECT "${FORCE_HTTPS:-not set, redirect stays off}"
+
+      - name: Check DNS and the HTTPS certificate
+        if: always()
+        env:
+          DEPLOY_SSH_HOST: ${{ vars.VIMEXX_SSH_HOST }}
+        run: |
+          # GitHub runs this step with bash -e; this script records failures itself.
+          set +e
+          set -uo pipefail
+          touch "$RESULTS"
+          record() { printf '%s\t%s\t%s\n' "$1" "$2" "$3" >>"$RESULTS"; }
+
+          # The domain must point at the same server the deploy uploads to.
+          expected_ipv4=$(dig +short A "${DEPLOY_SSH_HOST:-}" | grep -E '^[0-9]+(\.[0-9]+){3}$' | sort -u | paste -sd, -)
+          [ -n "$expected_ipv4" ] || record WARN 'DNS' 'VIMEXX_SSH_HOST is not set or does not resolve, so the expected address is unknown'
+          for name in "$SITE_DOMAIN" "www.$SITE_DOMAIN"; do
+            a=$(dig +short +time=5 +tries=2 "$name" A | grep -E '^[0-9]+(\.[0-9]+){3}$' | sort -u | paste -sd, -)
+            if [ -z "$a" ]; then
+              record FAIL "DNS $name" "no A record; point it at the Vimexx package${expected_ipv4:+ ($expected_ipv4)}"
+            elif [ -z "$expected_ipv4" ] || [ "$a" = "$expected_ipv4" ]; then
+              record OK "DNS $name" "A $a"
+            else
+              record FAIL "DNS $name" "A $a, but the Vimexx package is $expected_ipv4; visitors still reach the old server"
+            fi
+          done
+
+          tls_log=$RUNNER_TEMP/tls.txt
+          leaf=$RUNNER_TEMP/leaf.pem
+          if openssl s_client -connect "$SITE_DOMAIN:443" -servername "$SITE_DOMAIN" \
+               -verify_return_error -verify_hostname "$SITE_DOMAIN" -showcerts </dev/null >"$tls_log" 2>&1; then
+            awk '/-----BEGIN CERTIFICATE-----/{c++} c==1{print} /-----END CERTIFICATE-----/{if (c==1) exit}' "$tls_log" >"$leaf"
+            issuer=$(openssl x509 -in "$leaf" -noout -issuer | sed 's/^issuer=//')
+            ends=$(openssl x509 -in "$leaf" -noout -enddate | cut -d= -f2)
+            if openssl x509 -in "$leaf" -noout -checkend 864000 >/dev/null; then
+              record OK 'HTTPS certificate' "valid for $SITE_DOMAIN until $ends, issued by $issuer"
+            else
+              record WARN 'HTTPS certificate' "expires within 10 days on $ends; renew in DirectAdmin"
+            fi
+          else
+            record FAIL 'HTTPS certificate' "no valid certificate for $SITE_DOMAIN; request Let's Encrypt in DirectAdmin"
+            tail -n 5 "$tls_log"
+          fi
+
+          https_status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 25 "https://$SITE_DOMAIN/" 2>/dev/null) \
+            && record INFO 'HTTPS response' "HTTP $https_status on https://$SITE_DOMAIN/" \
+            || record INFO 'HTTPS response' 'no HTTPS response yet'
+
+          redirect=$(curl -sS -o /dev/null -w '%{http_code} %{redirect_url}' --max-time 25 "http://$SITE_DOMAIN/" 2>/dev/null) \
+            && record INFO 'HTTP response' "$redirect" \
+            || record INFO 'HTTP response' 'no HTTP response'
+
+          if curl -fsS --max-time 25 -o "$RUNNER_TEMP/deployment.json" "https://$SITE_DOMAIN/deployment.json" 2>/dev/null; then
+            summary=$(python3 - "$RUNNER_TEMP/deployment.json" <<'PYTHON'
+          import json, sys
+          with open(sys.argv[1]) as handle:
+              manifest = json.load(handle)
+          print('commit {}, built {}, CMS {}'.format(
+              manifest['commit'][:8], manifest['builtAt'], 'on' if manifest['cmsEnabled'] else 'off'))
+          PYTHON
+            ) && record INFO 'Published build' "$summary" || record INFO 'Published build' 'deployment.json is not readable'
+          else
+            record INFO 'Published build' 'no deployment.json yet, so nothing is published'
+          fi
+
+      - name: Check SSH access and the GeluksVogel documentroot without uploading
+        if: always()
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.VIMEXX_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.VIMEXX_SSH_KNOWN_HOSTS }}
+          DEPLOY_SSH_HOST: ${{ vars.VIMEXX_SSH_HOST }}
+          DEPLOY_SSH_USER: ${{ vars.VIMEXX_SSH_USER }}
+          DEPLOY_SSH_PORT: ${{ vars.VIMEXX_SSH_PORT }}
+          DEPLOY_WEBROOT: ${{ vars.VIMEXX_WEBROOT }}
+        run: |
+          # GitHub runs this step with bash -e; this script records failures itself.
+          set +e
+          set -uo pipefail
+          touch "$RESULTS"
+          record() { printf '%s\t%s\t%s\n' "$1" "$2" "$3" >>"$RESULTS"; }
+
+          if [ -z "$SSH_PRIVATE_KEY" ] || [ -z "$SSH_KNOWN_HOSTS" ] || [ -z "$DEPLOY_SSH_HOST" ] || [ -z "$DEPLOY_SSH_USER" ]; then
+            record FAIL 'SSH access' 'the SSH secrets or variables are incomplete'
+            exit 0
+          fi
+          DEPLOY_WEBROOT=${DEPLOY_WEBROOT%/}
+          case "$DEPLOY_WEBROOT" in
+            "/domains/$HOSTING_DOMAIN/public_html"|"/home/$DEPLOY_SSH_USER/domains/$HOSTING_DOMAIN/public_html") ;;
+            *) record FAIL 'SSH access' "VIMEXX_WEBROOT is not the GeluksVogel documentroot on $HOSTING_DOMAIN"; exit 0 ;;
+          esac
+
+          umask 077
+          ssh_temp=$(mktemp -d)
+          trap 'rm -rf "$ssh_temp"' EXIT
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$ssh_temp/key"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$ssh_temp/known_hosts"
+
+          # The public half of the deploy key is not secret: show it so the exact
+          # line in DirectAdmin -> Advanced Features -> SSH Keys can be compared.
+          if ssh-keygen -y -f "$ssh_temp/key" > "$ssh_temp/key.pub" 2>/dev/null; then
+            fingerprint=$(ssh-keygen -lf "$ssh_temp/key.pub" | awk '{print $2}')
+            record INFO 'GitHub deploy key' "$fingerprint; this public key must be in DirectAdmin -> SSH Keys" 
+            echo 'Public key that GitHub offers to the hosting:'
+            cat "$ssh_temp/key.pub"
+          else
+            record FAIL 'GitHub deploy key' 'VIMEXX_SSH_PRIVATE_KEY is not a usable private key'
+            exit 0
+          fi
+
+          log=$ssh_temp/ssh.log
+          ssh -p "${DEPLOY_SSH_PORT:-7685}" -i "$ssh_temp/key" \
+            -o IdentitiesOnly=yes -o BatchMode=yes -o ConnectTimeout=20 \
+            -o StrictHostKeyChecking=yes -o "UserKnownHostsFile=$ssh_temp/known_hosts" \
+            "$DEPLOY_SSH_USER@$DEPLOY_SSH_HOST" "bash -s -- '$DEPLOY_SSH_USER' '$DEPLOY_WEBROOT'" >"$log" 2>&1 <<'REMOTE'
+          set -u
+          expected_user=$1
+          webroot=$2
+          problems=0
+          printf 'logged in as %s, home %s\n' "$(id -un)" "$HOME"
+          if [ "$(id -un)" != "$expected_user" ]; then
+            echo "FAILED: logged in as $(id -un), expected $expected_user"
+            problems=1
+          fi
+          if [ ! -d "$webroot" ]; then
+            echo "FAILED: the documentroot $webroot does not exist in the SSH shell"
+            alternative="$HOME/${webroot#/}"
+            if [ -d "$alternative" ]; then
+              echo "It does exist as $alternative, so set VIMEXX_WEBROOT to that full path"
+            fi
+            problems=1
+          else
+            if [ -L "$webroot" ]; then echo "FAILED: the documentroot is a symlink"; problems=1; fi
+            if [ ! -w "$webroot" ]; then echo "FAILED: the documentroot is not writable"; problems=1; fi
+            if [ ! -w "${webroot%/public_html}" ]; then
+              echo "FAILED: ${webroot%/public_html} is not writable, so releases and backups cannot be kept outside public_html"
+              problems=1
+            fi
+            printf 'documentroot %s\n' "$(realpath "$webroot")"
+            df -Pk "$webroot" | awk 'NR==2 {printf "free disk space %.1f GB\n", $4/1048576}'
+          fi
+          for tool in bash rsync tar flock; do
+            command -v "$tool" >/dev/null || { echo "FAILED: $tool is missing on the host"; problems=1; }
+          done
+          exit $problems
+          REMOTE
+          status=$?
+          cat "$log"
+
+          if [ "$status" -eq 0 ]; then
+            record OK 'SSH access' 'key, documentroot, rsync, tar and flock verified; nothing uploaded'
+          elif grep -q 'Permission denied' "$log"; then
+            record FAIL 'SSH access' "the hosting rejected the deploy key; add the public key above for $DEPLOY_SSH_USER in DirectAdmin -> Advanced Features -> SSH Keys and keep SSH access enabled"
+          elif grep -qE 'No .* host key is known|not known' "$log"; then
+            record FAIL 'SSH access' "VIMEXX_SSH_KNOWN_HOSTS holds no key for $DEPLOY_SSH_HOST on port ${DEPLOY_SSH_PORT:-7685}; run this check again with show_server_key enabled, confirm the fingerprint with the provider, then set the secret"
+          elif grep -qE 'IDENTIFICATION HAS CHANGED|Host key verification failed' "$log"; then
+            record FAIL 'SSH access' 'the server key differs from VIMEXX_SSH_KNOWN_HOSTS; have the provider confirm the new server key before replacing the secret'
+          elif grep -qE 'Connection timed out|Connection refused|Could not resolve' "$log"; then
+            record FAIL 'SSH access' "no SSH connection to $DEPLOY_SSH_HOST on port ${DEPLOY_SSH_PORT:-7685}"
+          else
+            reason=$(grep -m1 '^FAILED: ' "$log" | sed 's/^FAILED: //')
+            hint=$(grep -m1 '^It does exist as ' "$log")
+            record FAIL 'SSH access' "login works, but ${reason:-a documentroot or tool check failed}${hint:+. $hint}"
+          fi
+
+      - name: Read the SSH server key for the known-hosts secret
+        if: always() && inputs.show_server_key
+        env:
+          DEPLOY_SSH_HOST: ${{ inputs.server_key_host || vars.VIMEXX_SSH_HOST }}
+          DEPLOY_SSH_PORT: ${{ vars.VIMEXX_SSH_PORT }}
+        run: |
+          # GitHub runs this step with bash -e; this script records failures itself.
+          set +e
+          set -uo pipefail
+          touch "$RESULTS"
+          record() { printf '%s\t%s\t%s\n' "$1" "$2" "$3" >>"$RESULTS"; }
+
+          scan=$RUNNER_TEMP/scan
+          if ! ssh-keyscan -t ed25519 -p "${DEPLOY_SSH_PORT:-7685}" "$DEPLOY_SSH_HOST" >"$scan" 2>"$scan.err" || [ ! -s "$scan" ]; then
+            record FAIL 'SSH server key' "could not read a server key from $DEPLOY_SSH_HOST"
+            cat "$scan.err"
+            exit 0
+          fi
+          echo 'Server key line for the VIMEXX_SSH_KNOWN_HOSTS secret:'
+          grep -v '^#' "$scan"
+          echo
+          echo 'Fingerprint to confirm with the hosting provider before trusting it:'
+          ssh-keygen -lf "$scan"
+          record INFO 'SSH server key' "$(ssh-keygen -lf "$scan" | awk '{print $2}' | paste -sd' ' -), read from the host; confirm it with the provider"
+
+      - name: Report readiness
+        if: always()
+        run: |
+          # GitHub runs this step with bash -e; this script records failures itself.
+          set +e
+          set -uo pipefail
+          touch "$RESULTS"
+          {
+            echo '## GeluksVogel go-live readiness'
+            echo
+            echo '| | Check | Detail |'
+            echo '| --- | --- | --- |'
+            while IFS=$'\t' read -r status label detail; do
+              case "$status" in OK) icon='✅';; WARN) icon='⚠️';; FAIL) icon='❌';; *) icon='ℹ️';; esac
+              printf '| %s | %s | %s |\n' "$icon" "${label//|/\\|}" "${detail//|/\\|}"
+            done <"$RESULTS"
+            echo
+          } >>"$GITHUB_STEP_SUMMARY"
+
+          cat "$RESULTS"
+          if grep -q '^FAIL' "$RESULTS"; then
+            echo 'Not ready to publish yet. Fix every ❌ above, then run this check again.' >>"$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          if grep -q '^WARN' "$RESULTS"; then
+            echo 'Hosting and SSH are ready. Finish the ⚠️ settings to publish and to open the CMS.' >>"$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Everything is ready. Pushes to main publish automatically, including CMS commits.' >>"$GITHUB_STEP_SUMMARY"
+          fi
