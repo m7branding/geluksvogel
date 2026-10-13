@@ -1095,14 +1095,9 @@ collections:
                 label: Tekst 4
                 widget: text
                 required: false
-                hint: Om ervoor te zorgen dat ‘de cirkel echt rond is’ worden onze afgekeurde eieren gebruikt door een kun…
+                hint: "Ook over de doosjes en de wikkels is nagedacht: onze eierdoosjes zijn de enige waar statiegeld op zi…"
               - name: paragraph5
                 label: Tekst 5
-                widget: text
-                required: false
-                hint: "Ook over de doosjes en de wikkels is nagedacht: onze eierdoosjes zijn de enige waar statiegeld op zi…"
-              - name: paragraph6
-                label: Tekst 6
                 widget: text
                 required: false
                 hint: In de afgelopen tijd hebben we al enorm veel klanten gelukkig mogen maken met eitjes en vleesproduct…
@@ -1637,41 +1632,6 @@ collections:
                 widget: text
                 required: false
                 hint: Hanensoep is in de natuurvoedingswinkel in conservenpotten verkrijgbaar. Deze (h)eerlijk smakende po…
-              - name: image2
-                label: Afbeelding 2
-                widget: image
-                required: false
-                hint: /assets/img/producten/man-in-de-pan.jpg
-              - name: imageAlt2
-                label: Alt-tekst 2
-                widget: string
-                required: false
-                hint: Een gele pan van Man in de Pan
-              - name: subheading2
-                label: Subtitel 2
-                widget: string
-                required: false
-                hint: Man in de pan
-              - name: paragraph3
-                label: Tekst 3
-                widget: text
-                required: false
-                hint: Geluksvogel is nauw betrokken bij Man in de Pan, een landelijk initiatief ter promotie van het biolo…
-              - name: paragraph4
-                label: Tekst 4
-                widget: text
-                required: false
-                hint: Je kunt hier meer over lezen op de website
-              - name: linkLabel
-                label: Linktekst
-                widget: string
-                required: false
-                hint: manindepan.nl
-              - name: href
-                label: Link
-                widget: string
-                required: false
-                hint: https://manindepan.nl/
       - name: recepten
         label: "/recepten/ · Recepten: overzicht en gedeelde teksten"
         file: src/data/recepten.json

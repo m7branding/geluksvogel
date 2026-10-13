@@ -33,7 +33,7 @@ contactformulier en wachtwoord-hashes.
 | `/de-kip/` | `de-kip.json` | Keuze hen/haan |
 | `/de-hen/` | `de-hen.json` | Levensloop (6 stappen) en tekst |
 | `/de-haan/` | `de-haan.json` | Levensloop (5 stappen), tekst en *Wist je dat…* |
-| `/producten/` | `producten.json` | Eierdoosje, wikkel, hanensoep, Man in de pan |
+| `/producten/` | `producten.json` | Eierdoosje, wikkel, hanensoep |
 | `/recepten/` | `recepten.json` + `src/content/recepten/` | 6 recepten |
 | `/veelgesteldevragen/` | `veelgesteldevragen.json` | 12 vragen in 3 groepen |
 | `/contact/` | `contact.json` | Formulier en e-mailadres |
@@ -71,6 +71,10 @@ build controleert dat elk oud adres en elk doorstuurdoel bestaat.
   *Henneneitjes*.
 * De homepage, de verhalenpagina en de 404-pagina hebben een korte nieuwe
   inleiding of omschrijving gekregen.
+* Op verzoek van de klant verwijderd (oktober 2026), omdat het niet meer
+  klopt: het blok *Man in de pan* op Producten, en op Ons verhaal de alinea
+  over kunst van afgekeurde eieren in het Rijksmuseum. De tijdlijn noemt die
+  momenten nog wel, als geschiedenis.
 
 **Nog door de klant te controleren** (overgenomen zoals het er stond):
 

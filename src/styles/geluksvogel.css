@@ -111,12 +111,14 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.55rem); }
   transition: box-shadow .3s, height .3s;
 }
 .site-header.is-scrolled { box-shadow: 0 1px 0 var(--line), 0 10px 30px -18px rgba(0, 0, 0, .25); }
-.header-inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: var(--header-h); transition: height .3s var(--ease); }
-.is-scrolled .header-inner { height: 78px; }
+.header-inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: var(--header-h); }
+/* The header keeps its height while scrolling; only the logo shrinks, with a
+   transform. A taller or shorter sticky header would move the page under the
+   reader, cross the scroll threshold again and make the header flicker. */
 .nav-wrap { display: contents; }
 .logo { display: block; justify-self: center; grid-column: 2; grid-row: 1; }
-.logo img { width: auto; height: 72px; transition: height .3s var(--ease); }
-.is-scrolled .logo img { height: 56px; }
+.logo img { width: auto; height: 72px; transition: transform .3s var(--ease); }
+.is-scrolled .logo img { transform: scale(.82); }
 .nav { display: flex; align-items: center; gap: clamp(14px, 2.2vw, 34px); list-style: none; margin: 0; padding: 0; }
 .nav-left { justify-self: start; grid-column: 1; grid-row: 1; }
 .nav-right { justify-self: end; grid-column: 3; grid-row: 1; }
@@ -163,7 +165,6 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.55rem); }
   .menu-toggle { display: inline-flex; align-items: center; justify-content: center; grid-column: 3; }
   .logo { grid-column: 2; grid-row: 1; }
   .logo img { height: 60px; }
-  .is-scrolled .logo img { height: 50px; }
 }
 
 /* Hero slideshow ----------------------------------------------------------- */

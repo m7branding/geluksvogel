@@ -12,12 +12,10 @@ interface Props {
   paragraph3?: string;
   /** Subtitel. Dit doen we ook! */
   subheading?: string;
-  /** Tekst 4. Om ervoor te zorgen dat ‘de cirkel echt rond is’ worden onze afgekeurde eieren gebruikt door een kun */
+  /** Tekst 4. Ook over de doosjes en de wikkels is nagedacht: onze eierdoosjes zijn de enige waar statiegeld op zi */
   paragraph4?: string;
-  /** Tekst 5. Ook over de doosjes en de wikkels is nagedacht: onze eierdoosjes zijn de enige waar statiegeld op zi */
+  /** Tekst 5. In de afgelopen tijd hebben we al enorm veel klanten gelukkig mogen maken met eitjes en vleesproduct */
   paragraph5?: string;
-  /** Tekst 6. In de afgelopen tijd hebben we al enorm veel klanten gelukkig mogen maken met eitjes en vleesproduct */
-  paragraph6?: string;
   /** Slotzin. Dit is GeluksVogel in Geluks-Vogelvlucht */
   closing?: string;
 }
@@ -30,7 +28,6 @@ const {
   subheading = homepage.watIs.subheading,
   paragraph4 = homepage.watIs.paragraph4,
   paragraph5 = homepage.watIs.paragraph5,
-  paragraph6 = homepage.watIs.paragraph6,
   closing = homepage.watIs.closing,
 } = Astro.props;
 
@@ -48,7 +45,6 @@ const {
         <h3 data-cms="onsverhaal.watIs.subheading">{subheading}</h3>
         <p data-cms="onsverhaal.watIs.paragraph4">{paragraph4}</p>
         <p data-cms="onsverhaal.watIs.paragraph5">{paragraph5}</p>
-        <p data-cms="onsverhaal.watIs.paragraph6">{paragraph6}</p>
         <p class="signoff"><span data-cms="onsverhaal.watIs.closing">{closing}</span></p>
       </div>
     </div>

@@ -4,8 +4,17 @@
   var formMessages = JSON.parse(document.getElementById('form-messages').textContent);
 
   /* Header: a shadow once the page scrolls ---------------------------------- */
+  // Two thresholds, so resting near one of them cannot switch the state back and forth.
   var header = document.querySelector('[data-header]');
-  var onScroll = function () { if (header) header.classList.toggle('is-scrolled', window.scrollY > 24); };
+  var scrolled = false;
+  var onScroll = function () {
+    if (!header) return;
+    var y = window.scrollY;
+    if (!scrolled && y > 48) scrolled = true;
+    else if (scrolled && y < 8) scrolled = false;
+    else return;
+    header.classList.toggle('is-scrolled', scrolled);
+  };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
