@@ -103,22 +103,24 @@ jobs:
             fi
           done
 
-          tls_log=$RUNNER_TEMP/tls.txt
-          leaf=$RUNNER_TEMP/leaf.pem
-          if openssl s_client -connect "$SITE_DOMAIN:443" -servername "$SITE_DOMAIN" \
-               -verify_return_error -verify_hostname "$SITE_DOMAIN" -showcerts </dev/null >"$tls_log" 2>&1; then
-            awk '/-----BEGIN CERTIFICATE-----/{c++} c==1{print} /-----END CERTIFICATE-----/{if (c==1) exit}' "$tls_log" >"$leaf"
-            issuer=$(openssl x509 -in "$leaf" -noout -issuer | sed 's/^issuer=//')
-            ends=$(openssl x509 -in "$leaf" -noout -enddate | cut -d= -f2)
-            if openssl x509 -in "$leaf" -noout -checkend 864000 >/dev/null; then
-              record OK 'HTTPS certificate' "valid for $SITE_DOMAIN until $ends, issued by $issuer"
+          for name in "$SITE_DOMAIN" "www.$SITE_DOMAIN"; do
+            tls_log=$RUNNER_TEMP/tls-$name.txt
+            leaf=$RUNNER_TEMP/leaf-$name.pem
+            if openssl s_client -connect "$name:443" -servername "$name" \
+                 -verify_return_error -verify_hostname "$name" -showcerts </dev/null >"$tls_log" 2>&1; then
+              awk '/-----BEGIN CERTIFICATE-----/{c++} c==1{print} /-----END CERTIFICATE-----/{if (c==1) exit}' "$tls_log" >"$leaf"
+              issuer=$(openssl x509 -in "$leaf" -noout -issuer | sed 's/^issuer=//')
+              ends=$(openssl x509 -in "$leaf" -noout -enddate | cut -d= -f2)
+              if openssl x509 -in "$leaf" -noout -checkend 864000 >/dev/null; then
+                record OK "HTTPS certificate $name" "valid until $ends, issued by $issuer"
+              else
+                record WARN "HTTPS certificate $name" "expires within 10 days on $ends; renew in DirectAdmin"
+              fi
             else
-              record WARN 'HTTPS certificate' "expires within 10 days on $ends; renew in DirectAdmin"
+              record FAIL "HTTPS certificate $name" "no valid certificate for $name; request Let's Encrypt in DirectAdmin for both names"
+              tail -n 5 "$tls_log"
             fi
-          else
-            record FAIL 'HTTPS certificate' "no valid certificate for $SITE_DOMAIN; request Let's Encrypt in DirectAdmin"
-            tail -n 5 "$tls_log"
-          fi
+          done
 
           https_status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 25 "https://$SITE_DOMAIN/" 2>/dev/null) \
             && record INFO 'HTTPS response' "HTTP $https_status on https://$SITE_DOMAIN/" \
